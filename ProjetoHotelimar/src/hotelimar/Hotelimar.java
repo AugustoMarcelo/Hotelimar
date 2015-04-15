@@ -8,6 +8,7 @@ public class Hotelimar {
         TelaLogin t1 = new TelaLogin();
         t1.setVisible(true);
         System.out.print("oi!\n jnn\n");
+        //kkk
     }
     
 }
