@@ -1,13 +1,31 @@
 package Telas;
 
+import Classes.CategoriaDAO;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 public class telaQuarto extends javax.swing.JFrame {
+    
+    private CategoriaDAO cat;
+    private ArrayList<String> nomes;
 
-    public telaQuarto() {
+    public telaQuarto() throws ClassNotFoundException {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/icones/shape_square_add.png")).getImage());
         this.setLocationRelativeTo(null);
+        cat = new CategoriaDAO();
+        nomes = cat.nomesCategoria();
+        montarComboCategoria();
+    }
+    
+    public void montarComboCategoria(){
+    
+        for(int x = 0; x < nomes.size(); x++){
+        
+            comboCategoria.addItem(nomes.get(x));
+        }    
     }
 
     @SuppressWarnings("unchecked")
@@ -23,8 +41,10 @@ public class telaQuarto extends javax.swing.JFrame {
         comboBoxDisponivel = new javax.swing.JComboBox();
         bCadastrar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
+        lCategoria = new javax.swing.JLabel();
+        comboCategoria = new javax.swing.JComboBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quarto");
 
         lNumero.setText("Número:");
@@ -37,9 +57,23 @@ public class telaQuarto extends javax.swing.JFrame {
 
         bCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/accept.png"))); // NOI18N
         bCadastrar.setText("Cadastrar");
+        bCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCadastrarActionPerformed(evt);
+            }
+        });
 
         bCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancel.png"))); // NOI18N
         bCancelar.setText("Cancelar");
+        bCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCancelarActionPerformed(evt);
+            }
+        });
+
+        lCategoria.setText("Categoria:");
+
+        comboCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione.." }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -50,22 +84,26 @@ public class telaQuarto extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(lDisponibilidade)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(comboBoxDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lNumero)
                                 .addComponent(lCapacidade))
                             .addGap(39, 39, 39)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(tfCapacidade)
-                                .addComponent(tfNumero))))
+                                .addComponent(tfNumero)))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lDisponibilidade)
+                                .addComponent(lCategoria))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(comboBoxDisponivel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(bCadastrar)
                         .addGap(18, 18, 18)
                         .addComponent(bCancelar)))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(158, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,29 +120,40 @@ public class telaQuarto extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lDisponibilidade)
                     .addComponent(comboBoxDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lCategoria)
+                    .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bCadastrar)
                     .addComponent(bCancelar))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(64, 64, 64))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCadastrarActionPerformed
+        // Cadastrar()
+    }//GEN-LAST:event_bCadastrarActionPerformed
+
+    private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
+        
+        dispose();
+        
+    }//GEN-LAST:event_bCancelarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -133,7 +182,11 @@ public class telaQuarto extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new telaQuarto().setVisible(true);
+                try {
+                    new telaQuarto().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(telaQuarto.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -142,8 +195,10 @@ public class telaQuarto extends javax.swing.JFrame {
     private javax.swing.JButton bCadastrar;
     private javax.swing.JButton bCancelar;
     private javax.swing.JComboBox comboBoxDisponivel;
+    private javax.swing.JComboBox comboCategoria;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lCapacidade;
+    private javax.swing.JLabel lCategoria;
     private javax.swing.JLabel lDisponibilidade;
     private javax.swing.JLabel lNumero;
     private javax.swing.JTextField tfCapacidade;

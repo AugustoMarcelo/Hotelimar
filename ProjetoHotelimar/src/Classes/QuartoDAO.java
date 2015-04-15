@@ -15,7 +15,9 @@ public class QuartoDAO {
         con.conectaBd();
     }
     
-    public void inserir(Quarto obj){    
+    public void inserir(Quarto obj){ 
+        
+        String sql = "INSERT INTO quarto VALUES (?,?,?,?)";
         
     }
     

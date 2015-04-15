@@ -1,60 +1,116 @@
 package Telas;
 
+import Classes.Categoria;
+import Classes.ProdutoDAO;
+import static java.lang.System.exit;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class formPrincipal extends javax.swing.JFrame {
     
-    private telaCliente telaCli;
-    private telaQuarto obj;
-    private teste1 t1;
 
     public formPrincipal() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
-        telaCli = new telaCliente();
-        obj = new telaQuarto();
         
-    }
+        }
+    
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenuCadastro = new javax.swing.JMenu();
-        jMenuItemClientes = new javax.swing.JMenuItem();
-        jMenuItemQuartos = new javax.swing.JMenuItem();
+        jMCategoria = new javax.swing.JMenu();
+        jMClientes = new javax.swing.JMenuItem();
+        jMQuartos = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMProduto = new javax.swing.JMenuItem();
+        jMAcessorio = new javax.swing.JMenuItem();
+        jMFrigobar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jmSair = new javax.swing.JMenuItem();
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulário Principal");
         setFocusable(false);
 
-        jMenuCadastro.setText("Cadastro");
+        jMCategoria.setText("Cadastro");
 
-        jMenuItemClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/user.png"))); // NOI18N
-        jMenuItemClientes.setText("Clientes");
-        jMenuItemClientes.addActionListener(new java.awt.event.ActionListener() {
+        jMClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/user.png"))); // NOI18N
+        jMClientes.setText("Clientes");
+        jMClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemClientesActionPerformed(evt);
+                jMClientesActionPerformed(evt);
             }
         });
-        jMenuCadastro.add(jMenuItemClientes);
+        jMCategoria.add(jMClientes);
 
-        jMenuItemQuartos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/application.png"))); // NOI18N
-        jMenuItemQuartos.setText("Quartos");
-        jMenuItemQuartos.addActionListener(new java.awt.event.ActionListener() {
+        jMQuartos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/application.png"))); // NOI18N
+        jMQuartos.setText("Quartos");
+        jMQuartos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemQuartosActionPerformed(evt);
+                jMQuartosActionPerformed(evt);
             }
         });
-        jMenuCadastro.add(jMenuItemQuartos);
+        jMCategoria.add(jMQuartos);
 
-        jMenuBar1.add(jMenuCadastro);
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/shading.png"))); // NOI18N
+        jMenuItem1.setText("Categoria");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMCategoria.add(jMenuItem1);
+
+        jMProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/package.png"))); // NOI18N
+        jMProduto.setText("Produto");
+        jMProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMProdutoActionPerformed(evt);
+            }
+        });
+        jMCategoria.add(jMProduto);
+
+        jMAcessorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/script_add.png"))); // NOI18N
+        jMAcessorio.setText("Acessorios");
+        jMAcessorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMAcessorioActionPerformed(evt);
+            }
+        });
+        jMCategoria.add(jMAcessorio);
+
+        jMFrigobar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/box.png"))); // NOI18N
+        jMFrigobar.setText("Frigobar");
+        jMFrigobar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMFrigobarActionPerformed(evt);
+            }
+        });
+        jMCategoria.add(jMFrigobar);
+
+        jMenuBar1.add(jMCategoria);
 
         jMenu2.setText("Edit");
+
+        jmSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancel.png"))); // NOI18N
+        jmSair.setText("Sair");
+        jmSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmSairActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmSair);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -73,22 +129,70 @@ public class formPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClientesActionPerformed
+    private void jMClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMClientesActionPerformed
         
+        telaCliente telaCli  = new telaCliente();
         telaCli.setVisible(true);
-        telaCli.setSize(t1.getSize());
-        telaCli.setLocation(0,0);
-        t1.add(telaCli);
-        
+                      
                 
-    }//GEN-LAST:event_jMenuItemClientesActionPerformed
+    }//GEN-LAST:event_jMClientesActionPerformed
 
-    private void jMenuItemQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemQuartosActionPerformed
+    private void jMQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMQuartosActionPerformed
         
-        obj.setVisible(true);
+        telaQuarto telaQua;
+        try {
+            telaQua = new telaQuarto();
+            telaQua.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
-    }//GEN-LAST:event_jMenuItemQuartosActionPerformed
+        
+        
+    }//GEN-LAST:event_jMQuartosActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        
+        telaCategoria telaCat;
+        try {
+            telaCat = new telaCategoria();
+            telaCat.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dispose();
+        //telaCat.setLocation(0,0);        
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jmSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmSairActionPerformed
+        
+        System.exit(0);
+        
+    }//GEN-LAST:event_jmSairActionPerformed
+
+    private void jMProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMProdutoActionPerformed
+        
+        telaProduto prod = new telaProduto();
+        prod.setVisible(true); 
+        
+        
+    }//GEN-LAST:event_jMProdutoActionPerformed
+
+    private void jMFrigobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMFrigobarActionPerformed
+        
+        telaFrigobar fig = new telaFrigobar();
+        fig.setVisible(true);
+        
+    }//GEN-LAST:event_jMFrigobarActionPerformed
+
+    private void jMAcessorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMAcessorioActionPerformed
+        
+        telaAcessorio telaAces = new telaAcessorio();
+        telaAces.setVisible(true);
+        
+    }//GEN-LAST:event_jMAcessorioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,10 +230,16 @@ public class formPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem jMAcessorio;
+    private javax.swing.JMenu jMCategoria;
+    private javax.swing.JMenuItem jMClientes;
+    private javax.swing.JMenuItem jMFrigobar;
+    private javax.swing.JMenuItem jMProduto;
+    private javax.swing.JMenuItem jMQuartos;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu jMenuCadastro;
-    private javax.swing.JMenuItem jMenuItemClientes;
-    private javax.swing.JMenuItem jMenuItemQuartos;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jmSair;
     // End of variables declaration//GEN-END:variables
 }

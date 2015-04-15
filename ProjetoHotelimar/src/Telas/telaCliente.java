@@ -1,5 +1,9 @@
 package Telas;
 
+import Classes.Cliente;
+import Classes.ClienteDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 public class telaCliente extends javax.swing.JFrame {
@@ -8,6 +12,27 @@ public class telaCliente extends javax.swing.JFrame {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/icones/group_add.png")).getImage());
         this.setLocationRelativeTo(null);
+    }
+    
+    public void cadastrarCliente() throws ClassNotFoundException{
+    
+        Cliente cli = new Cliente();
+        ClienteDAO obj = new ClienteDAO();
+        
+        cli.setCargo(tfCargo.getText());
+        cli.setCfp(formatoCpf.getText());
+        cli.setEmail(tfEmail.getText());
+        cli.setEndereco(tfEmail.getText());
+        cli.setEstadoCivil((String) comboEstadoCivil.getSelectedItem());
+        cli.setLocalTrabalho(tfLocalTrabalho.getText());
+        cli.setNome(tfNome.getText());
+        cli.setRg(tfRg.getText());
+        cli.setSexo((String) comboSexo.getSelectedItem());
+        cli.setTel(tfTelefone.getText());
+        
+        obj.inserir(cli);
+        
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -38,7 +63,7 @@ public class telaCliente extends javax.swing.JFrame {
         bCadastrar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cliente");
 
         jPanel1.setToolTipText("Tela Cliente");
@@ -80,9 +105,19 @@ public class telaCliente extends javax.swing.JFrame {
 
         bCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/accept.png"))); // NOI18N
         bCadastrar.setText("Cadastrar");
+        bCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCadastrarActionPerformed(evt);
+            }
+        });
 
         bCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancel.png"))); // NOI18N
         bCancelar.setText("Cancelar");
+        bCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -194,7 +229,7 @@ public class telaCliente extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -203,6 +238,22 @@ public class telaCliente extends javax.swing.JFrame {
     private void comboSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSexoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboSexoActionPerformed
+
+    private void bCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCadastrarActionPerformed
+        
+        try {
+            cadastrarCliente();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(telaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_bCadastrarActionPerformed
+
+    private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
+        
+        dispose();
+        
+    }//GEN-LAST:event_bCancelarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
