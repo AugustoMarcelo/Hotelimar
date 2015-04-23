@@ -1,7 +1,7 @@
 package Telas;
 
 import Classes.Categoria;
-import Classes.ProdutoDAO;
+import ClasseDAO.ProdutoDAO;
 import static java.lang.System.exit;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -33,8 +33,11 @@ public class formPrincipal extends javax.swing.JFrame {
         jMProduto = new javax.swing.JMenuItem();
         jMAcessorio = new javax.swing.JMenuItem();
         jMFrigobar = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenu2 = new javax.swing.JMenu();
         jmSair = new javax.swing.JMenuItem();
+        mConfiguracao = new javax.swing.JMenu();
+        jmFrigobar = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -97,6 +100,7 @@ public class formPrincipal extends javax.swing.JFrame {
             }
         });
         jMCategoria.add(jMFrigobar);
+        jMCategoria.add(jSeparator1);
 
         jMenuBar1.add(jMCategoria);
 
@@ -112,6 +116,13 @@ public class formPrincipal extends javax.swing.JFrame {
         jMenu2.add(jmSair);
 
         jMenuBar1.add(jMenu2);
+
+        mConfiguracao.setText("Configurações");
+
+        jmFrigobar.setText("Frigobar");
+        mConfiguracao.add(jmFrigobar);
+
+        jMenuBar1.add(mConfiguracao);
 
         setJMenuBar(jMenuBar1);
 
@@ -142,7 +153,7 @@ public class formPrincipal extends javax.swing.JFrame {
         telaQuarto telaQua;
         try {
             telaQua = new telaQuarto();
-            telaQua.setVisible(true);
+            telaQua.setVisible(true);            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -161,7 +172,7 @@ public class formPrincipal extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        dispose();
+        //dispose();
         //telaCat.setLocation(0,0);        
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -182,8 +193,15 @@ public class formPrincipal extends javax.swing.JFrame {
 
     private void jMFrigobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMFrigobarActionPerformed
         
-        telaFrigobar fig = new telaFrigobar();
-        fig.setVisible(true);
+        telaFrigobar fig;
+        try {
+            fig = new telaFrigobar();
+            fig.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //dispose();
+        
         
     }//GEN-LAST:event_jMFrigobarActionPerformed
 
@@ -240,6 +258,9 @@ public class formPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenuItem jmFrigobar;
     private javax.swing.JMenuItem jmSair;
+    private javax.swing.JMenu mConfiguracao;
     // End of variables declaration//GEN-END:variables
 }

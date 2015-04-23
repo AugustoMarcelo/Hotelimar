@@ -1,12 +1,17 @@
 package Classes;
 
+import java.util.ArrayList;
+
 public class Categoria {
     
     private String nome;
     private int id;
     private double preco;
+    private ArrayList<String> acessorios;
     
     public Categoria(){
+        
+        acessorios = new ArrayList<>();
     
     }
 
@@ -32,5 +37,14 @@ public class Categoria {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    
+    public ArrayList<String> getAcessorios() {
+        return acessorios;
+    }
+
+    public void setAcessorios(ArrayList<String> acessorios) {
+        this.acessorios = acessorios;
     }
 }

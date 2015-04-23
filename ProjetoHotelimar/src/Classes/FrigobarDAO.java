@@ -17,8 +17,6 @@ public class FrigobarDAO {
     }
     
     public void adicionar(Frigobar obj){
-        
-        //String sql = "INSERT INTO frigobar (nome,)"
     
     }
     

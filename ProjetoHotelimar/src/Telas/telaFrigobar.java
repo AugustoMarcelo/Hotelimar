@@ -1,49 +1,87 @@
 package Telas;
 
 import Classes.Frigobar;
-import Classes.FrigobarDAO;
-import Classes.ProdutoDAO;
+import ClasseDAO.FrigobarDAO;
+import ClasseDAO.ProdutoDAO;
+import ClasseDAO.ProdutoFrigobarDAO;
+import Classes.Produto;
+import Classes.ProdutoFrigobar;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class telaFrigobar extends javax.swing.JFrame {
     
+    private JCheckBox check;
+    private JTextField quant;
+    private ProdutoFrigobar prodFri;
+    private ProdutoFrigobarDAO prodFriDAO;
+    private FrigobarDAO objFri;
+    private ArrayList<JTextField> quantList;
+    private ArrayList<JCheckBox> checkList;
     private ArrayList<String> nomes;
+    private ProdutoDAO prodDAO;
+    private Frigobar frig;
+    private Produto prod;
 
-    public telaFrigobar() {
+    public telaFrigobar() throws ClassNotFoundException {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon(getClass().getResource("/icones/picture_empty.png")).getImage());
-        try {
-            ProdutoDAO obj = new ProdutoDAO();
-            nomes = obj.pesquisarNomeProduto();
-            preencherCombo();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        prodDAO = new ProdutoDAO();
+        nomes = new ArrayList<>();
+        quantList = new ArrayList<>();
+        checkList = new ArrayList<>();
+        prodFri = new ProdutoFrigobar();
+        objFri = new FrigobarDAO();
+        prod = new Produto();
+        frig = new Frigobar();
+        prodFriDAO = new ProdutoFrigobarDAO();
+        checkbox();
+        
+    }
+    
+    public void checkbox(){
+    
+        nomes = prodDAO.pesquisarNomeProduto();
+        pProduto.setLayout(new GridLayout(nomes.size(),1));
+        
+        for(int x = 0; x < nomes.size(); x++){
+        
+            check = new JCheckBox(nomes.get(x));
+            checkList.add(check);
+            pProduto.add(checkList.get(x));
+            quant = new JTextField();
+            quantList.add(quant);
+            pProduto.add(quant);
         }
+        
         
     }
     
     public void cadastrarFrigobar() throws ClassNotFoundException{
     
-        Frigobar f = new Frigobar();
-        FrigobarDAO obj = new FrigobarDAO();
+        objFri.adicionar(frig);
         
-        f.setNomeProduto((String) comboProduto.getSelectedItem());
-        f.setQuantidade(lQuantidade.getX());
+        for(int x = 0; x < nomes.size(); x++){
         
-        obj.adicionar(f);
-    }
-    
-    public void preencherCombo(){
-    
-        for(int x = 0; x < nomes.size();x++){
-        
-            comboProduto.addItem(nomes.get(x));
-        
+            if(checkList.get(x).isSelected()){
+                
+                prod.setNome(checkList.get(x).getText());
+                prodFri.setIdProduto(prodDAO.pesquisar(prod).getCodigoBarra());
+                prodFri.setQuantidade(Integer.parseInt(quantList.get(x).getText()));
+                prodFri.setIdFrigobar(objFri.pesquisar(objFri.pesquisar(frig)).getId());
+                
+                prodFriDAO.adicionar(prodFri);
+                
+            }
         }
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -51,18 +89,15 @@ public class telaFrigobar extends javax.swing.JFrame {
     private void initComponents() {
 
         lProduto = new javax.swing.JLabel();
-        comboProduto = new javax.swing.JComboBox();
         lQuantidade = new javax.swing.JLabel();
-        tfQuantidade = new javax.swing.JTextField();
         bCadastrar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
+        pProduto = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Frigobar");
 
         lProduto.setText("Produto:");
-
-        comboProduto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione.." }));
 
         lQuantidade.setText("Quantidade:");
 
@@ -82,43 +117,52 @@ public class telaFrigobar extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout pProdutoLayout = new javax.swing.GroupLayout(pProduto);
+        pProduto.setLayout(pProdutoLayout);
+        pProdutoLayout.setHorizontalGroup(
+            pProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 376, Short.MAX_VALUE)
+        );
+        pProdutoLayout.setVerticalGroup(
+            pProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bCadastrar)
-                        .addGap(32, 32, 32)
-                        .addComponent(bCancelar))
+                        .addGap(18, 18, 18)
+                        .addComponent(bCancelar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lQuantidade)
-                            .addComponent(lProduto))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(comboProduto, 0, 144, Short.MAX_VALUE)
-                            .addComponent(tfQuantidade))))
-                .addContainerGap(82, Short.MAX_VALUE))
+                            .addComponent(pProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lProduto)
+                                .addGap(33, 33, 33)
+                                .addComponent(lQuantidade)))
+                        .addGap(0, 25, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lProduto)
-                    .addComponent(comboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lQuantidade)
-                    .addComponent(tfQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60)
+                    .addComponent(lQuantidade))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bCadastrar)
                     .addComponent(bCancelar))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         pack();
@@ -131,6 +175,8 @@ public class telaFrigobar extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(telaFrigobar.class.getName()).log(Level.SEVERE, null, ex);
         }
+        JOptionPane.showMessageDialog(null,"Frigobar Cadastrado com Sucesso!");
+        dispose();
         
     }//GEN-LAST:event_bCadastrarActionPerformed
 
@@ -167,7 +213,11 @@ public class telaFrigobar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new telaFrigobar().setVisible(true);
+                try {
+                    new telaFrigobar().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(telaFrigobar.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -175,9 +225,8 @@ public class telaFrigobar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bCadastrar;
     private javax.swing.JButton bCancelar;
-    private javax.swing.JComboBox comboProduto;
     private javax.swing.JLabel lProduto;
     private javax.swing.JLabel lQuantidade;
-    private javax.swing.JTextField tfQuantidade;
+    private javax.swing.JPanel pProduto;
     // End of variables declaration//GEN-END:variables
 }

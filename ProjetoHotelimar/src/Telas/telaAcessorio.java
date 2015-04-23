@@ -1,7 +1,7 @@
 package Telas;
 
 import Classes.Acessorio;
-import Classes.AcessorioDAO;
+import ClasseDAO.AcessorioDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

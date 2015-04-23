@@ -100,12 +100,12 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="tfRg" max="32767" attributes="0"/>
                               <Component id="formatoCpf" max="32767" attributes="0"/>
+                              <Component id="tfRg" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="126" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -189,8 +189,6 @@
             <Property name="text" type="java.lang.String" value="RG:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="tfRg">
-        </Component>
         <Component class="javax.swing.JLabel" name="lSexo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Sexo: "/>
@@ -234,8 +232,8 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
                 <StringItem index="0" value="Selecione.."/>
-                <StringItem index="1" value="Casado"/>
-                <StringItem index="2" value="Solteiro"/>
+                <StringItem index="1" value="Casado(a)"/>
+                <StringItem index="2" value="Solteiro(a)"/>
               </StringArray>
             </Property>
           </Properties>
@@ -289,6 +287,8 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bCancelarActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="tfRg">
         </Component>
       </SubComponents>
     </Container>

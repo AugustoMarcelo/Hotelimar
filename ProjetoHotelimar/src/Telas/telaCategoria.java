@@ -1,25 +1,28 @@
 package Telas;
 
-import Classes.AcessorioDAO;
+import ClasseDAO.AcessorioCategoriaDAO;
+import ClasseDAO.AcessorioDAO;
 import Classes.Categoria;
-import Classes.CategoriaDAO;
-import java.awt.Checkbox;
+import ClasseDAO.CategoriaDAO;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.CheckBox;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import static javax.swing.UIManager.get;
+import javax.swing.JTextField;
 
 public class telaCategoria extends javax.swing.JFrame {
     
     private JCheckBox check;
+    private javax.swing.JTextField quant;
     private AcessorioDAO aces;
-    private ArrayList<String> nomesAces;    
+    private ArrayList<JTextField> quants;
+    private ArrayList<String> nomesAces;  
+    private ArrayList<JCheckBox> checks;
+    private ArrayList<String> acessorios;
+    private AcessorioCategoriaDAO aceDAO;
 
     public telaCategoria() throws ClassNotFoundException {
         initComponents();
@@ -27,31 +30,48 @@ public class telaCategoria extends javax.swing.JFrame {
         aces = new AcessorioDAO();
         nomesAces = new ArrayList<>();
         nomesAces = aces.nomesAcessorios();
+        checks = new ArrayList<>();
+        acessorios = new ArrayList<>();
+        aceDAO = new AcessorioCategoriaDAO();
+        quants = new ArrayList<>();
         checkBox();
     }
     
-    public void cadastrarCategoria() throws ClassNotFoundException{
+    public void cadastrarCategoria() throws ClassNotFoundException, SQLException{
     
+        int idCategoria,idAcessorio;
         Categoria cat = new Categoria();
         CategoriaDAO obj = new CategoriaDAO();
+        AcessorioDAO aces = new AcessorioDAO();
         
         cat.setNome(tfNome.getText());
-        cat.setPreco(Double.parseDouble(tfPreco.getText()));
-        
+        cat.setPreco(Double.parseDouble(tfPreco.getText()));         
         obj.adicionar(cat);
+        idCategoria = obj.pesquisarIdCategoria(cat);
+        
+        for(int x = 0; x < checks.size(); x++){
+            if(checks.get(x).isSelected()){
+                //aces.atualizarIdAcessorio(idCategoria,checks.get(x).getText());
+                idAcessorio = aces.pesquisar(checks.get(x).getText()).getId();
+                aceDAO.adicionar(idCategoria, idAcessorio);
+            }
+            
+        }
         
     }
     
     public void checkBox(){       
         
-        jpCheckbox.setLayout(new GridLayout(1,1));
+        jpCheckbox.setLayout(new GridLayout(nomesAces.size()/2,1));
         
         for(int x = 0; x < nomesAces.size(); x++){             
             
-            check = new JCheckBox(nomesAces.get(x), true);
-           
-            JOptionPane.showMessageDialog(null,nomesAces.get(x));
-            jpCheckbox.add(check);            
+            check = new JCheckBox(nomesAces.get(x));
+            checks.add(check);            
+            jpCheckbox.add(checks.get(x)); 
+//            quant = new javax.swing.JTextField();
+//            quants.add(quant);
+//            jpCheckbox.add(quant);            
            
        }   
        
@@ -91,54 +111,52 @@ public class telaCategoria extends javax.swing.JFrame {
 
         jbCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancel.png"))); // NOI18N
         jbCancelar.setText("Cancelar");
+        jbCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCancelarActionPerformed(evt);
+            }
+        });
 
-        jpCheckbox.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jpCheckbox.setForeground(new java.awt.Color(0, 0, 0));
-
-        jLabel1.setText("Acessorios:");
 
         javax.swing.GroupLayout jpCheckboxLayout = new javax.swing.GroupLayout(jpCheckbox);
         jpCheckbox.setLayout(jpCheckboxLayout);
         jpCheckboxLayout.setHorizontalGroup(
             jpCheckboxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpCheckboxLayout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGap(0, 473, Short.MAX_VALUE)
         );
         jpCheckboxLayout.setVerticalGroup(
             jpCheckboxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpCheckboxLayout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 63, Short.MAX_VALUE))
+            .addGap(0, 106, Short.MAX_VALUE)
         );
+
+        jLabel1.setText("Acessorios:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jpCheckbox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lNome)
                             .addComponent(lPreco))
                         .addGap(43, 43, 43)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfNome)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(tfPreco)
-                                .addGap(54, 54, 54))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
+                            .addComponent(tfPreco)
+                            .addComponent(tfNome))
+                        .addGap(25, 25, 25))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jbCadastrar)
-                        .addGap(28, 28, 28)
+                        .addGap(18, 18, 18)
                         .addComponent(jbCancelar)
-                        .addGap(0, 102, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jpCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbCadastrar, jbCancelar});
@@ -150,17 +168,19 @@ public class telaCategoria extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lNome)
                     .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lPreco)
                     .addComponent(tfPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCadastrar)
                     .addComponent(jbCancelar))
-                .addGap(26, 26, 26))
+                .addGap(48, 48, 48))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jbCadastrar, jbCancelar});
@@ -173,30 +193,34 @@ public class telaCategoria extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
-        /*try {
+               
+        try {
             cadastrarCategoria();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(telaCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(telaCategoria.class.getName()).log(Level.SEVERE, null, ex);
         }
-        dispose();*/
-        JOptionPane.showMessageDialog(null,"if: " + check.isSelected());
-        if(check.isSelected()){
-            
-            JOptionPane.showMessageDialog(null,"Clicado: " + check.getText());           
-            
-        }
-        
-        
-        
+        dispose();
         
     }//GEN-LAST:event_jbCadastrarActionPerformed
+
+    private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
+        
+//        for(int x = 0; x < quants.size(); x++){
+//        
+//            JOptionPane.showMessageDialog(null,quants.get(x).getText());
+//        }
+        dispose();
+        
+    }//GEN-LAST:event_jbCancelarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

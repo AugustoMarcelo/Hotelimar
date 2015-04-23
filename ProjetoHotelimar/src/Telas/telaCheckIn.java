@@ -73,6 +73,11 @@ public class telaCheckIn extends javax.swing.JFrame {
 
         bCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/accept.png"))); // NOI18N
         bCadastrar.setText("Cadastrar");
+        bCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCadastrarActionPerformed(evt);
+            }
+        });
 
         bCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancel.png"))); // NOI18N
         bCancelar.setText("Cancelar");
@@ -169,6 +174,10 @@ public class telaCheckIn extends javax.swing.JFrame {
     private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
         
     }//GEN-LAST:event_jComboBox1MouseClicked
+
+    private void bCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCadastrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bCadastrarActionPerformed
 
     /**
      * @param args the command line arguments

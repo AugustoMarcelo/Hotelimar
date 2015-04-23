@@ -1,6 +1,10 @@
 package Telas;
 
-import Classes.CategoriaDAO;
+import ClasseDAO.CategoriaDAO;
+import ClasseDAO.QuartoDAO;
+import Classes.Categoria;
+import Classes.Quarto;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,6 +14,9 @@ public class telaQuarto extends javax.swing.JFrame {
     
     private CategoriaDAO cat;
     private ArrayList<String> nomes;
+    private Quarto quarto;
+    private QuartoDAO obj;
+    
 
     public telaQuarto() throws ClassNotFoundException {
         initComponents();
@@ -17,6 +24,8 @@ public class telaQuarto extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         cat = new CategoriaDAO();
         nomes = cat.nomesCategoria();
+        quarto = new Quarto();
+        obj = new QuartoDAO();        
         montarComboCategoria();
     }
     
@@ -26,6 +35,23 @@ public class telaQuarto extends javax.swing.JFrame {
         
             comboCategoria.addItem(nomes.get(x));
         }    
+    }
+    
+    public void cadastrarQuarto() throws SQLException{
+    
+        Categoria c = new Categoria();
+        
+        quarto.setCapacidade(Integer.parseInt(tfCapacidade.getText()));
+        quarto.setNumero(tfNumero.getText());       
+        if(comboBoxDisponivel.getSelectedItem().equals("sim")){        
+            quarto.setDisponibilidade(true);
+        }else{
+            quarto.setDisponibilidade(false);            
+        }
+        c.setNome((String) comboCategoria.getSelectedItem());
+        quarto.setIdCategoria(cat.pesquisarIdCategoria(c));
+        //quarto.set
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -82,15 +108,18 @@ public class telaQuarto extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lNumero)
                                 .addComponent(lCapacidade))
-                            .addGap(39, 39, 39)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tfCapacidade)
-                                .addComponent(tfNumero)))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(tfCapacidade, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lDisponibilidade)
@@ -108,8 +137,8 @@ public class telaQuarto extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lNumero)
                     .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -124,7 +153,7 @@ public class telaQuarto extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lCategoria)
                     .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bCadastrar)
                     .addComponent(bCancelar))
@@ -146,7 +175,12 @@ public class telaQuarto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCadastrarActionPerformed
-        // Cadastrar()
+        
+        try {
+            cadastrarQuarto();
+                    } catch (SQLException ex) {
+            Logger.getLogger(telaQuarto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_bCadastrarActionPerformed
 
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed

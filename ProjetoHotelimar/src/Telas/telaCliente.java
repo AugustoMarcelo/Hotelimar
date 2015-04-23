@@ -1,7 +1,7 @@
 package Telas;
 
 import Classes.Cliente;
-import Classes.ClienteDAO;
+import ClasseDAO.ClienteDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -22,7 +22,7 @@ public class telaCliente extends javax.swing.JFrame {
         cli.setCargo(tfCargo.getText());
         cli.setCfp(formatoCpf.getText());
         cli.setEmail(tfEmail.getText());
-        cli.setEndereco(tfEmail.getText());
+        cli.setEndereco(tfEndereco.getText());
         cli.setEstadoCivil((String) comboEstadoCivil.getSelectedItem());
         cli.setLocalTrabalho(tfLocalTrabalho.getText());
         cli.setNome(tfNome.getText());
@@ -44,7 +44,6 @@ public class telaCliente extends javax.swing.JFrame {
         tfNome = new javax.swing.JTextField();
         lCpf = new javax.swing.JLabel();
         lRg = new javax.swing.JLabel();
-        tfRg = new javax.swing.JTextField();
         lSexo = new javax.swing.JLabel();
         comboSexo = new javax.swing.JComboBox();
         lLocalTrabalho = new javax.swing.JLabel();
@@ -62,6 +61,7 @@ public class telaCliente extends javax.swing.JFrame {
         formatoCpf = new javax.swing.JFormattedTextField();
         bCadastrar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
+        tfRg = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cliente");
@@ -89,7 +89,7 @@ public class telaCliente extends javax.swing.JFrame {
 
         lEstadoCivil.setText("Estado Civil: ");
 
-        comboEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione..", "Casado", "Solteiro" }));
+        comboEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione..", "Casado(a)", "Solteiro(a)" }));
 
         lendereco.setText("Endereço: ");
 
@@ -169,9 +169,9 @@ public class telaCliente extends javax.swing.JFrame {
                             .addComponent(lRg))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfRg)
-                            .addComponent(formatoCpf))))
-                .addContainerGap(126, Short.MAX_VALUE))
+                            .addComponent(formatoCpf)
+                            .addComponent(tfRg))))
+                .addGap(126, 126, 126))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,6 +246,7 @@ public class telaCliente extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(telaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+        dispose();
         
     }//GEN-LAST:event_bCadastrarActionPerformed
 
