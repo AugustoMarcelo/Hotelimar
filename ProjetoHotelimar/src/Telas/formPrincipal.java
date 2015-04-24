@@ -28,12 +28,16 @@ public class formPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMCategoria = new javax.swing.JMenu();
         jMClientes = new javax.swing.JMenuItem();
-        jMQuartos = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMProduto = new javax.swing.JMenuItem();
-        jMAcessorio = new javax.swing.JMenuItem();
-        jMFrigobar = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMQuartos = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMProduto = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        jMAcessorio = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        jMFrigobar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jmSair = new javax.swing.JMenuItem();
         mConfiguracao = new javax.swing.JMenu();
@@ -42,7 +46,7 @@ public class formPrincipal extends javax.swing.JFrame {
         jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Formulário Principal");
+        setTitle("Tela Principal");
         setFocusable(false);
 
         jMCategoria.setText("Cadastro");
@@ -55,6 +59,7 @@ public class formPrincipal extends javax.swing.JFrame {
             }
         });
         jMCategoria.add(jMClientes);
+        jMCategoria.add(jSeparator1);
 
         jMQuartos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/application.png"))); // NOI18N
         jMQuartos.setText("Quartos");
@@ -64,6 +69,7 @@ public class formPrincipal extends javax.swing.JFrame {
             }
         });
         jMCategoria.add(jMQuartos);
+        jMCategoria.add(jSeparator2);
 
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/shading.png"))); // NOI18N
         jMenuItem1.setText("Categoria");
@@ -73,6 +79,7 @@ public class formPrincipal extends javax.swing.JFrame {
             }
         });
         jMCategoria.add(jMenuItem1);
+        jMCategoria.add(jSeparator3);
 
         jMProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/package.png"))); // NOI18N
         jMProduto.setText("Produto");
@@ -82,6 +89,7 @@ public class formPrincipal extends javax.swing.JFrame {
             }
         });
         jMCategoria.add(jMProduto);
+        jMCategoria.add(jSeparator4);
 
         jMAcessorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/script_add.png"))); // NOI18N
         jMAcessorio.setText("Acessorios");
@@ -91,6 +99,7 @@ public class formPrincipal extends javax.swing.JFrame {
             }
         });
         jMCategoria.add(jMAcessorio);
+        jMCategoria.add(jSeparator5);
 
         jMFrigobar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/box.png"))); // NOI18N
         jMFrigobar.setText("Frigobar");
@@ -100,13 +109,12 @@ public class formPrincipal extends javax.swing.JFrame {
             }
         });
         jMCategoria.add(jMFrigobar);
-        jMCategoria.add(jSeparator1);
 
         jMenuBar1.add(jMCategoria);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Opções");
 
-        jmSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancel.png"))); // NOI18N
+        jmSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/sair.png"))); // NOI18N
         jmSair.setText("Sair");
         jmSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,7 +127,13 @@ public class formPrincipal extends javax.swing.JFrame {
 
         mConfiguracao.setText("Configurações");
 
+        jmFrigobar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/frigobar.png"))); // NOI18N
         jmFrigobar.setText("Frigobar");
+        jmFrigobar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmFrigobarActionPerformed(evt);
+            }
+        });
         mConfiguracao.add(jmFrigobar);
 
         jMenuBar1.add(mConfiguracao);
@@ -212,6 +226,10 @@ public class formPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMAcessorioActionPerformed
 
+    private void jmFrigobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmFrigobarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmFrigobarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -259,6 +277,10 @@ public class formPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JMenuItem jmFrigobar;
     private javax.swing.JMenuItem jmSair;
     private javax.swing.JMenu mConfiguracao;
