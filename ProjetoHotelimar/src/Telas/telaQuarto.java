@@ -1,14 +1,17 @@
 package Telas;
 
 import ClasseDAO.CategoriaDAO;
+import ClasseDAO.FrigobarDAO;
 import ClasseDAO.QuartoDAO;
 import Classes.Categoria;
+import Classes.Frigobar;
 import Classes.Quarto;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class telaQuarto extends javax.swing.JFrame {
     
@@ -16,17 +19,22 @@ public class telaQuarto extends javax.swing.JFrame {
     private ArrayList<String> nomes;
     private Quarto quarto;
     private QuartoDAO obj;
+    private Categoria c;
+    private Frigobar fri;
+    private FrigobarDAO friDAO;
     
 
     public telaQuarto() throws ClassNotFoundException {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/icones/shape_square_add.png")).getImage());
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
         cat = new CategoriaDAO();
         nomes = cat.nomesCategoria();
         quarto = new Quarto();
-        obj = new QuartoDAO();        
+        obj = new QuartoDAO();  
+        c = new Categoria();
+        fri = new Frigobar();
+        friDAO = new FrigobarDAO();
         montarComboCategoria();
     }
     
@@ -39,20 +47,19 @@ public class telaQuarto extends javax.swing.JFrame {
     }
     
     public void cadastrarQuarto() throws SQLException{
-    
-        Categoria c = new Categoria();
+        
         
         quarto.setCapacidade(Integer.parseInt(tfCapacidade.getText()));
-        quarto.setNumero(tfNumero.getText());       
-        if(comboBoxDisponivel.getSelectedItem().equals("sim")){        
+        quarto.setNumero(tfNumero.getText());   
+        if(comboBoxDisponivel.getSelectedItem().equals("Sim")){        
             quarto.setDisponibilidade(true);
         }else{
-            quarto.setDisponibilidade(false);            
+               quarto.setDisponibilidade(false);            
         }
-        c.setNome((String) comboCategoria.getSelectedItem());
-        quarto.setIdCategoria(cat.pesquisarIdCategoria(c));
-        //quarto.set
-        
+        c.setNome((String) comboCategoria.getSelectedItem());            
+        quarto.setIdCategoria(cat.pesquisarIdCategoria(c));            
+        quarto.setIdFrigobar(friDAO.pesquisar(fri).getId());
+        obj.inserir(quarto);        
     }
 
     @SuppressWarnings("unchecked")
@@ -74,7 +81,7 @@ public class telaQuarto extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quarto");
 
-        lNumero.setText("Número do Quarto:");
+        lNumero.setText("Número:");
 
         lCapacidade.setText("Capacidade:");
 
@@ -109,33 +116,34 @@ public class telaQuarto extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lNumero)
+                                .addComponent(lCapacidade))
+                            .addGap(39, 39, 39)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfCapacidade)
+                                .addComponent(tfNumero)))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lDisponibilidade)
+                                .addComponent(lCategoria))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(comboBoxDisponivel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lNumero)
-                            .addComponent(lCapacidade))
-                        .addGap(7, 7, 7)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfCapacidade, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboBoxDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lDisponibilidade)
-                    .addComponent(lCategoria))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(110, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(bCadastrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(bCancelar)))
-                .addContainerGap())
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lNumero)
                     .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -150,26 +158,22 @@ public class telaQuarto extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lCategoria)
                     .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bCancelar)
-                    .addComponent(bCadastrar))
-                .addGap(25, 25, 25))
+                    .addComponent(bCadastrar)
+                    .addComponent(bCancelar))
+                .addGap(64, 64, 64))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -182,6 +186,7 @@ public class telaQuarto extends javax.swing.JFrame {
                     } catch (SQLException ex) {
             Logger.getLogger(telaQuarto.class.getName()).log(Level.SEVERE, null, ex);
         }
+        dispose();
     }//GEN-LAST:event_bCadastrarActionPerformed
 
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
@@ -212,6 +217,7 @@ public class telaQuarto extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(telaQuarto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
