@@ -16,6 +16,7 @@ public class teste1 extends javax.swing.JInternalFrame {
      */
     public teste1() {
         initComponents();
+        //teste realizado
     }
 
     /**
