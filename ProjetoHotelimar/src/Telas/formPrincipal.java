@@ -12,11 +12,10 @@ public class formPrincipal extends javax.swing.JFrame {
 
     public formPrincipal() {
         initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH);
+        this.setSize(1000, 500);
         this.setLocationRelativeTo(null);
         
-        }
-    
+        }   
     
     
 
@@ -122,9 +121,19 @@ public class formPrincipal extends javax.swing.JFrame {
         jmCheckIn.setText("Hospedagem");
 
         jmiCheckIn.setText("Check-in");
+        jmiCheckIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiCheckInActionPerformed(evt);
+            }
+        });
         jmCheckIn.add(jmiCheckIn);
 
         jMiCheckOut.setText("Check-out");
+        jMiCheckOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMiCheckOutActionPerformed(evt);
+            }
+        });
         jmCheckIn.add(jMiCheckOut);
 
         jMenuBar1.add(jmCheckIn);
@@ -189,11 +198,7 @@ public class formPrincipal extends javax.swing.JFrame {
             telaCat.setVisible(true);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //dispose();
-        //telaCat.setLocation(0,0);        
-        //dispose();
-        //telaCat.setLocation(0,0);        
+        }       
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -232,6 +237,22 @@ public class formPrincipal extends javax.swing.JFrame {
         telaAces.setVisible(true);
         
     }//GEN-LAST:event_jMAcessorioActionPerformed
+
+    private void jmiCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCheckInActionPerformed
+        
+        telaHospedagem tHospede = new telaHospedagem("Tela Check-In");
+        tHospede.setTitle("Tela Check-In");
+        tHospede.setVisible(true);        
+        
+    }//GEN-LAST:event_jmiCheckInActionPerformed
+
+    private void jMiCheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMiCheckOutActionPerformed
+        
+        telaHospedagem tHospede = new telaHospedagem();
+        tHospede.setVisible(true);
+        tHospede.setTitle("Tela Check-Out");
+                
+    }//GEN-LAST:event_jMiCheckOutActionPerformed
 
     /**
      * @param args the command line arguments

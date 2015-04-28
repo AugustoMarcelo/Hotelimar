@@ -21,7 +21,7 @@ public class TelaLogin extends javax.swing.JFrame {
         getRootPane().setDefaultButton(jButton1);
         this.setIconImage(new ImageIcon(getClass().getResource("/icones/lock.png")).getImage());
         ConectaBd c = ConectaBd.getInstance();
-        con = c.conectaBd();
+        con = c.conectaBd();        
         this.setLocationRelativeTo(null);
     }
 

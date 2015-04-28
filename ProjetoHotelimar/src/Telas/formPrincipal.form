@@ -108,11 +108,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Check-in"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiCheckInActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMiCheckOut">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Check-out"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMiCheckOutActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
