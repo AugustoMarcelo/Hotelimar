@@ -12,10 +12,11 @@ public class formPrincipal extends javax.swing.JFrame {
 
     public formPrincipal() {
         initComponents();
+
         this.setSize(1000, 500);
         this.setLocationRelativeTo(null);
-        
-        }   
+
+        }
     
     
 
@@ -41,6 +42,7 @@ public class formPrincipal extends javax.swing.JFrame {
         jmCheckIn = new javax.swing.JMenu();
         jmiCheckIn = new javax.swing.JMenuItem();
         jMiCheckOut = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         mOpcoes = new javax.swing.JMenu();
         jmSair = new javax.swing.JMenuItem();
 
@@ -113,6 +115,7 @@ public class formPrincipal extends javax.swing.JFrame {
 
         mConfiguracao.setText("Configurações");
 
+        jmFrigobar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/frigobar.png"))); // NOI18N
         jmFrigobar.setText("Frigobar");
         mConfiguracao.add(jmFrigobar);
 
@@ -120,6 +123,7 @@ public class formPrincipal extends javax.swing.JFrame {
 
         jmCheckIn.setText("Hospedagem");
 
+        jmiCheckIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/checkin.png"))); // NOI18N
         jmiCheckIn.setText("Check-in");
         jmiCheckIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,6 +132,7 @@ public class formPrincipal extends javax.swing.JFrame {
         });
         jmCheckIn.add(jmiCheckIn);
 
+        jMiCheckOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/checkout.png"))); // NOI18N
         jMiCheckOut.setText("Check-out");
         jMiCheckOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,11 +141,15 @@ public class formPrincipal extends javax.swing.JFrame {
         });
         jmCheckIn.add(jMiCheckOut);
 
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/calendar.png"))); // NOI18N
+        jMenuItem2.setText("Reservas");
+        jmCheckIn.add(jMenuItem2);
+
         jMenuBar1.add(jmCheckIn);
 
         mOpcoes.setText("Opções");
 
-        jmSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancel.png"))); // NOI18N
+        jmSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/sair.png"))); // NOI18N
         jmSair.setText("Sair");
         jmSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,7 +248,6 @@ public class formPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMAcessorioActionPerformed
 
     private void jmiCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCheckInActionPerformed
-        
         telaHospedagem tHospede = new telaHospedagem("Tela Check-In");
         tHospede.setTitle("Tela Check-In");
         tHospede.setVisible(true);        
@@ -247,12 +255,12 @@ public class formPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiCheckInActionPerformed
 
     private void jMiCheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMiCheckOutActionPerformed
-        
         telaHospedagem tHospede = new telaHospedagem();
         tHospede.setVisible(true);
         tHospede.setTitle("Tela Check-Out");
                 
     }//GEN-LAST:event_jMiCheckOutActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -299,6 +307,7 @@ public class formPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMQuartos;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMiCheckOut;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
