@@ -15,6 +15,7 @@ public class formPrincipal extends javax.swing.JFrame {
 
         this.setSize(1000, 500);
         this.setLocationRelativeTo(null);
+        //testando tarefa 00_7
 
         }
     
