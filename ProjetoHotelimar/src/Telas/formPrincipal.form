@@ -94,6 +94,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmFrigobar">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icones/frigobar.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Frigobar"/>
               </Properties>
             </MenuItem>
@@ -106,12 +109,26 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmiCheckIn">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icones/checkin.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Check-in"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMiCheckOut">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icones/checkout.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Check-out"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icones/calendar.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Reservas"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -124,7 +141,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jmSair">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/icones/cancel.png"/>
+                  <Image iconType="3" name="/icones/sair.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sair"/>
               </Properties>

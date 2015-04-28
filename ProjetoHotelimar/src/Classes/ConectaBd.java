@@ -29,9 +29,9 @@ public class ConectaBd {
         Connection conexao = null;
               
             try{                
-                String url = "jdbc:postgresql://localhost:5433/hotelimar";
+                String url = "jdbc:postgresql://localhost:5432/hotelimar";
                 String usuario = "postgres";
-                String senhaPadrao = "root";            
+                String senhaPadrao = "admin";            
                 Class.forName("org.postgresql.Driver");                
                 conexao = DriverManager.getConnection(url, usuario, senhaPadrao);
                 //JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
