@@ -126,6 +126,11 @@ public class formPrincipal extends javax.swing.JFrame {
 
         jmiCheckIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/checkin.png"))); // NOI18N
         jmiCheckIn.setText("Check-in");
+        jmiCheckIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiCheckInActionPerformed(evt);
+            }
+        });
         jmCheckIn.add(jmiCheckIn);
 
         jMiCheckOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/checkout.png"))); // NOI18N
@@ -241,6 +246,13 @@ public class formPrincipal extends javax.swing.JFrame {
         telaAces.setVisible(true);
         
     }//GEN-LAST:event_jMAcessorioActionPerformed
+
+    private void jmiCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCheckInActionPerformed
+        
+        TelaHospedagem telaHosp = new TelaHospedagem();
+        telaHosp.setVisible(true);
+        //telaHosp.setTitle("Realizar Check-in");
+    }//GEN-LAST:event_jmiCheckInActionPerformed
 
     /**
      * @param args the command line arguments
