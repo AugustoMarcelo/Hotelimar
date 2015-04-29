@@ -23,15 +23,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <Component id="jPanel1" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -41,55 +38,77 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lDestino" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lDataEntrada" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lOrigem" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lMotivo" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lCpf" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="tfCpf" max="32767" attributes="0"/>
-                      <Component id="tfMotivo" alignment="0" max="32767" attributes="0"/>
-                      <Component id="tfOrigem" alignment="0" max="32767" attributes="0"/>
-                      <Component id="ftDataEntrada" alignment="0" min="-2" pref="105" max="-2" attributes="0"/>
-                      <Component id="tfDestino" alignment="0" pref="159" max="32767" attributes="0"/>
-                      <Component id="ftDataSaida" alignment="0" min="-2" pref="105" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="91" pref="91" max="-2" attributes="0"/>
-              </Group>
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lDataSaida" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                           <Component id="jButton1" linkSize="1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jButton2" linkSize="1" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lDestino" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lDataEntrada" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lOrigem" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lMotivo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lCpf" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lDataSaida" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="tfCpf" max="32767" attributes="0"/>
+                              <Component id="tfMotivo" alignment="0" max="32767" attributes="0"/>
+                              <Component id="tfOrigem" alignment="0" max="32767" attributes="0"/>
+                              <Component id="ftDataEntrada" alignment="0" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="tfDestino" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
+                              <Component id="ftDataSaida" alignment="0" min="-2" pref="105" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="76" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="lCategoria" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lQuarto" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jComboCategoria" pref="156" max="32767" attributes="0"/>
+                      <Component id="jComboQuarto" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="30" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="57" max="32767" attributes="0"/>
+                  <EmptySpace pref="59" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lCpf" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tfCpf" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jComboCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lMotivo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tfMotivo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lQuarto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jComboQuarto" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -111,11 +130,12 @@
                       <Component id="lDataSaida" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="ftDataSaida" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButton1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -185,6 +205,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Cadastrar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
@@ -193,6 +216,43 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lCategoria">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Categoria: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboCategoria">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="1">
+                <StringItem index="0" value="Selecione.."/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboCategoriaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lQuarto">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="N&#xba; Quarto:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboQuarto">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="1">
+                <StringItem index="0" value="Selecione.."/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboQuartoActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

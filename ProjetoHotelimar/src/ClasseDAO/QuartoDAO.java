@@ -6,17 +6,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 public class QuartoDAO {
     
     private Connection con = null;
     private PreparedStatement pmt;
     private ResultSet rs;
+    private ArrayList<Quarto> listQuarto;
     
     public QuartoDAO() throws ClassNotFoundException{
     
         ConectaBd conexao = ConectaBd.getInstance();
         con = conexao.conectaBd();
+        listQuarto = new ArrayList<>();
     }
     
     public void inserir(Quarto obj){ 
@@ -51,9 +54,32 @@ public class QuartoDAO {
     
     }
     
-    public Quarto pesquisar(Quarto obj){
+    public ArrayList<Quarto> pesquisar(Quarto obj){
         
-        return null;
+        listQuarto.clear();
+        String sql = "SELECT * FROM quarto WHERE id_categoria = ?";
+        try{            
+            pmt = con.prepareStatement(sql);
+            pmt.setInt(1,obj.getId());
+            rs = pmt.executeQuery();
+            while(rs.next()){
+                
+                Quarto q = new Quarto();
+                q.setId(rs.getInt("id_quarto"));
+                q.setCapacidade(rs.getInt("capacidade"));
+                q.setDisponibilidade(rs.getBoolean("disponibilidade"));
+                q.setIdCategoria(rs.getInt("id_categoria"));
+                q.setIdFrigobar(rs.getInt("id_frigobar"));
+                q.setNumero(rs.getString("numero"));
+                listQuarto.add(q);
+            }
+        
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null, erro);
+        }
+        
+        return listQuarto;
     
     }
     
