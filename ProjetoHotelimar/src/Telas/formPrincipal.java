@@ -25,6 +25,8 @@ public class formPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMCategoria = new javax.swing.JMenu();
         jMClientes = new javax.swing.JMenuItem();
@@ -42,8 +44,17 @@ public class formPrincipal extends javax.swing.JFrame {
         jmiCheckIn = new javax.swing.JMenuItem();
         jMiCheckOut = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
         mOpcoes = new javax.swing.JMenu();
         jmSair = new javax.swing.JMenuItem();
+
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulário Principal");
@@ -146,6 +157,18 @@ public class formPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jmCheckIn);
 
+        jMenu1.setText("Pesquisa");
+
+        jMenuItem3.setText("Cliente");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu1);
+
         mOpcoes.setText("Opções");
 
         jmSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/sair.png"))); // NOI18N
@@ -165,88 +188,24 @@ public class formPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 475, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 281, Short.MAX_VALUE)
+            .addGap(0, 292, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMClientesActionPerformed
-        
-        telaCliente telaCli  = new telaCliente();
-        telaCli.setVisible(true);
-                      
-                
-    }//GEN-LAST:event_jMClientesActionPerformed
-
-    private void jMQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMQuartosActionPerformed
-        
-        telaQuarto telaQua;
-        try {
-            telaQua = new telaQuarto();
-            telaQua.setVisible(true);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        
-        
-    }//GEN-LAST:event_jMQuartosActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        
-        telaCategoria telaCat;
-        try {
-            telaCat = new telaCategoria();
-            telaCat.setVisible(true);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }       
-        
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
     private void jmSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmSairActionPerformed
-        
+
         System.exit(0);
-        
+
     }//GEN-LAST:event_jmSairActionPerformed
 
-    private void jMProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMProdutoActionPerformed
-        
-        telaProduto prod = new telaProduto();
-        prod.setVisible(true); 
-        
-        
-    }//GEN-LAST:event_jMProdutoActionPerformed
-
-    private void jMAcessorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMAcessorioActionPerformed
-        
-        telaAcessorio telaAces = new telaAcessorio();
-        telaAces.setVisible(true);
-        
-    }//GEN-LAST:event_jMAcessorioActionPerformed
-
-    private void jmiCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCheckInActionPerformed
-        
-        telaHospedagem tHospede;
-        try {
-            tHospede = new telaHospedagem("Tela Check-In");
-            tHospede.setTitle("Tela Check-In");
-            tHospede.setVisible(true); 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-               
-        
-    }//GEN-LAST:event_jmiCheckInActionPerformed
-
     private void jMiCheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMiCheckOutActionPerformed
-        
+
         telaHospedagem tHospede;
         try {
             tHospede = new telaHospedagem();
@@ -255,18 +214,28 @@ public class formPrincipal extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-                
-                
+
     }//GEN-LAST:event_jMiCheckOutActionPerformed
 
     private void jMiCheckOutActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMiCheckOutActionPerformed1
-        
-        
-        
+
     }//GEN-LAST:event_jMiCheckOutActionPerformed1
 
+    private void jmiCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCheckInActionPerformed
+
+        telaHospedagem tHospede;
+        try {
+            tHospede = new telaHospedagem("Tela Check-In");
+            tHospede.setTitle("Tela Check-In");
+            tHospede.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jmiCheckInActionPerformed
+
     private void jmFrigobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmFrigobarActionPerformed
-        
+
         telaFrigobar fig;
         try {
             fig = new telaFrigobar();
@@ -274,8 +243,71 @@ public class formPrincipal extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jmFrigobarActionPerformed
+
+    private void jMAcessorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMAcessorioActionPerformed
+
+        telaAcessorio telaAces = new telaAcessorio();
+        telaAces.setVisible(true);
+
+    }//GEN-LAST:event_jMAcessorioActionPerformed
+
+    private void jMProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMProdutoActionPerformed
+
+        telaProduto prod = new telaProduto();
+        prod.setVisible(true);
+
+    }//GEN-LAST:event_jMProdutoActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+        telaCategoria telaCat;
+        try {
+            telaCat = new telaCategoria();
+            telaCat.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMQuartosActionPerformed
+
+        telaQuarto telaQua;
+        try {
+            telaQua = new telaQuarto();
+            telaQua.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jMQuartosActionPerformed
+
+    private void jMClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMClientesActionPerformed
+
+        telaCliente telaCli;
+        try {
+            telaCli = new telaCliente();
+            telaCli.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+
+    }//GEN-LAST:event_jMClientesActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        
+        try {
+            TelaPesquisaCliente tPesq = new TelaPesquisaCliente();
+            tPesq.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
 
     /**
@@ -315,15 +347,19 @@ public class formPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList jList1;
     private javax.swing.JMenuItem jMAcessorio;
     private javax.swing.JMenu jMCategoria;
     private javax.swing.JMenuItem jMClientes;
     private javax.swing.JMenuItem jMProduto;
     private javax.swing.JMenuItem jMQuartos;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMiCheckOut;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;

@@ -15,6 +15,9 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
+import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 
 public class telaHospedagem extends javax.swing.JFrame {
     
@@ -37,6 +40,7 @@ public class telaHospedagem extends javax.swing.JFrame {
         ctg = new Categoria();
         quarto = new Quarto();
         quartoDAO = new QuartoDAO();
+        bPesquisarReserva.setVisible(false);
         montarComboCategoria();
         
     }
@@ -51,7 +55,7 @@ public class telaHospedagem extends javax.swing.JFrame {
         ctg = new Categoria();
         nomes = cat.nomesCategoria();
         quarto = new Quarto();
-        quartoDAO = new QuartoDAO();
+        quartoDAO = new QuartoDAO();        
         setarData();
         montarComboCategoria();
     }
@@ -86,7 +90,7 @@ public class telaHospedagem extends javax.swing.JFrame {
         int id = idQuarto((String) jComboQuarto.getSelectedItem());
         //JOptionPane.showMessageDialog(null,"id retornado = " + id);
         hosp.setId_quarto(id);
-        hosp.setMotivo(tfMotivo.getText());
+        hosp.setMotivo(taMotivo.getText());
         hosp.setOrigem(tfOrigem.getText());
         hosp.setStatus(false);
         
@@ -109,6 +113,29 @@ public class telaHospedagem extends javax.swing.JFrame {
             if(listQuarto.get(x).isDisponibilidade()){
                 jComboQuarto.addItem(listQuarto.get(x).getNumero());
             }
+        }   
+    }
+    
+    public boolean pesquisarReserva() throws ParseException, SQLException{
+    
+        hosp.setCpf(tfCpf.getText());
+        hosp.setDataEntrada(converterData(ftDataEntrada.getText()));
+        hosp = hospDAO.pesquisar(hosp);
+        quarto.setId(hosp.getId_quarto());
+        quarto = quartoDAO.pesquisarIdQuarto(quarto);
+        ctg.setId(quarto.getIdCategoria());
+        ctg.setNome(cat.pesquisarCategoria(ctg));
+        if(hosp.getCpf() != null){
+        
+            String msg = "CPF = " + hosp.getCpf() + "\nOrigem = " + hosp.getOrigem()
+                    + " \nDESTINO = " + hosp.getDestino() + " \nMOTIVO = " + hosp.getMotivo()
+                    + "\nNº QUARTO = " + quarto.getNumero() + "\nCATEGORIA DO QUARTO = " + ctg.getNome();
+            JOptionPane.showMessageDialog(null, msg,"Reserva Encontrada",INFORMATION_MESSAGE);
+            return true;
+        }else{
+        
+            JOptionPane.showMessageDialog(null,"Reserva não Encontrada", "Reserva não Encontrada", ERROR_MESSAGE);
+            return false;
         }
     }
 
@@ -126,7 +153,6 @@ public class telaHospedagem extends javax.swing.JFrame {
         lMotivo = new javax.swing.JLabel();
         lOrigem = new javax.swing.JLabel();
         lDestino = new javax.swing.JLabel();
-        tfMotivo = new javax.swing.JTextField();
         tfOrigem = new javax.swing.JTextField();
         tfDestino = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -135,6 +161,9 @@ public class telaHospedagem extends javax.swing.JFrame {
         jComboCategoria = new javax.swing.JComboBox();
         lQuarto = new javax.swing.JLabel();
         jComboQuarto = new javax.swing.JComboBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taMotivo = new javax.swing.JTextArea();
+        bPesquisarReserva = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -202,50 +231,71 @@ public class telaHospedagem extends javax.swing.JFrame {
             }
         });
 
+        taMotivo.setColumns(20);
+        taMotivo.setRows(5);
+        jScrollPane1.setViewportView(taMotivo);
+
+        bPesquisarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/zoom.png"))); // NOI18N
+        bPesquisarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPesquisarReservaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(lCpf)
+                        .addGap(58, 58, 58)
+                        .addComponent(tfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bPesquisarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lDestino)
-                                    .addComponent(lDataEntrada)
-                                    .addComponent(lOrigem)
-                                    .addComponent(lMotivo)
-                                    .addComponent(lCpf)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lDataSaida)))
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(tfCpf)
-                            .addComponent(tfMotivo, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfOrigem, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ftDataEntrada, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfDestino, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ftDataSaida, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(lDestino)
+                            .addComponent(lOrigem)
+                            .addComponent(lMotivo))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(lCategoria))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lQuarto)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboCategoria, 0, 156, Short.MAX_VALUE)
-                    .addComponent(jComboQuarto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                        .addGap(4, 4, 4)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lDataEntrada)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lDataSaida)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ftDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lCategoria)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lQuarto)))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ftDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(27, 27, 27))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
@@ -253,39 +303,42 @@ public class telaHospedagem extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(59, Short.MAX_VALUE)
+                .addGap(61, 61, 61)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lCpf)
-                    .addComponent(tfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lCategoria)
-                    .addComponent(jComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bPesquisarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfCpf))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lMotivo)
-                    .addComponent(tfMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lQuarto)
-                    .addComponent(jComboQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lOrigem)
-                    .addComponent(tfOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lDestino)
-                    .addComponent(tfDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lDataEntrada)
-                    .addComponent(ftDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lQuarto)
+                            .addComponent(jComboQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lDataEntrada)
+                            .addComponent(ftDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lOrigem)
+                            .addComponent(tfOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lDestino)
+                            .addComponent(tfDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lDataSaida)
-                    .addComponent(ftDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                    .addComponent(ftDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lMotivo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap())
+                    .addComponent(jButton2)))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2});
@@ -298,7 +351,7 @@ public class telaHospedagem extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -336,6 +389,22 @@ public class telaHospedagem extends javax.swing.JFrame {
         dispose();
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void bPesquisarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPesquisarReservaActionPerformed
+        
+        boolean achou = false;
+        try {            
+            achou = pesquisarReserva();
+        } catch (ParseException ex) {
+            Logger.getLogger(telaHospedagem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(telaHospedagem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(achou){
+            dispose();
+        }
+        
+    }//GEN-LAST:event_bPesquisarReservaActionPerformed
 
     
     public void setarData(){
@@ -382,6 +451,7 @@ public class telaHospedagem extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bPesquisarReserva;
     private javax.swing.JFormattedTextField ftDataEntrada;
     private javax.swing.JFormattedTextField ftDataSaida;
     private javax.swing.JButton jButton1;
@@ -389,6 +459,7 @@ public class telaHospedagem extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboCategoria;
     private javax.swing.JComboBox jComboQuarto;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lCategoria;
     private javax.swing.JLabel lCpf;
     private javax.swing.JLabel lDataEntrada;
@@ -397,9 +468,9 @@ public class telaHospedagem extends javax.swing.JFrame {
     private javax.swing.JLabel lMotivo;
     private javax.swing.JLabel lOrigem;
     private javax.swing.JLabel lQuarto;
+    private javax.swing.JTextArea taMotivo;
     private javax.swing.JFormattedTextField tfCpf;
     private javax.swing.JTextField tfDestino;
-    private javax.swing.JTextField tfMotivo;
     private javax.swing.JTextField tfOrigem;
     // End of variables declaration//GEN-END:variables
 }

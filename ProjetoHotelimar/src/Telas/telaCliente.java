@@ -5,13 +5,35 @@ import ClasseDAO.ClienteDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
 public class telaCliente extends javax.swing.JFrame {
+    
+    private Cliente c;
+    private ClienteDAO cDAO;
 
-    public telaCliente() {
+    public telaCliente() throws ClassNotFoundException {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/icones/group_add.png")).getImage());
         this.setLocationRelativeTo(null);
+        bAtualizar.setEnabled(false);
+        bExcluir.setEnabled(false);
+        c = new Cliente();
+        cDAO = new ClienteDAO();
+    }
+    
+    public telaCliente(Cliente cli) throws ClassNotFoundException{
+        
+        initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/icones/group_add.png")).getImage());
+        this.setLocationRelativeTo(null);
+        bCadastrar.setEnabled(false);
+        preencherTela(cli);
+        c = new Cliente();
+        cDAO = new ClienteDAO();
+        
     }
     
     public void cadastrarCliente() throws ClassNotFoundException{
@@ -30,9 +52,42 @@ public class telaCliente extends javax.swing.JFrame {
         cli.setSexo((String) comboSexo.getSelectedItem());
         cli.setTel(tfTelefone.getText());
         
-        obj.inserir(cli);
+        obj.inserir(cli);       
         
+    }
+    
+    public void preencherTela(Cliente cli){
+    
+        tfCargo.setText(cli.getCargo());
+        tfEmail.setText(cli.getEmail());
+        tfEndereco.setText(cli.getEndereco());
+        tfLocalTrabalho.setText(cli.getLocalTrabalho());
+        tfNome.setText(cli.getNome());
+        tfRg.setText(cli.getRg());
+        tfTelefone.setText(cli.getTel());
+        formatoCpf.setText(cli.getCfp());        
+    }
+    
+    public void excluirCliente(){
+    
+        c.setCfp(formatoCpf.getText());
+        boolean acao = cDAO.excluir(c);
         
+    }
+    
+    public void atualizarCliente(){    
+        
+        c.setCargo(tfCargo.getText());
+        c.setCfp(formatoCpf.getText());
+        c.setEmail(tfEmail.getText());
+        c.setEndereco(tfEndereco.getText());
+        c.setEstadoCivil((String) comboEstadoCivil.getSelectedItem());
+        c.setLocalTrabalho(tfLocalTrabalho.getText());
+        c.setNome(tfNome.getText());
+        c.setRg(tfRg.getText());
+        c.setSexo((String) comboSexo.getSelectedItem());
+        c.setTel(tfTelefone.getText());
+        cDAO.atualizar(c);
     }
 
     @SuppressWarnings("unchecked")
@@ -62,6 +117,8 @@ public class telaCliente extends javax.swing.JFrame {
         bCadastrar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
         tfRg = new javax.swing.JTextField();
+        bAtualizar = new javax.swing.JButton();
+        bExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cliente");
@@ -119,21 +176,33 @@ public class telaCliente extends javax.swing.JFrame {
             }
         });
 
+        bAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/user_edit.png"))); // NOI18N
+        bAtualizar.setText("Atualizar");
+        bAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAtualizarActionPerformed(evt);
+            }
+        });
+
+        bExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/user_delete.png"))); // NOI18N
+        bExcluir.setText("Excluir");
+        bExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lCargo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfCargo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lNome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lLocalTrabalho)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -145,34 +214,51 @@ public class telaCliente extends javax.swing.JFrame {
                             .addComponent(lEmail))
                         .addGap(2, 2, 2)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(bCadastrar)
-                                .addGap(35, 35, 35)
-                                .addComponent(bCancelar)
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(tfEndereco)
                             .addComponent(tfTelefone)
-                            .addComponent(tfEmail))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(tfEmail)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lNome)
+                                .addGap(100, 100, 100)
+                                .addComponent(tfNome))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addComponent(bCadastrar)
+                                .addGap(18, 18, 18)
+                                .addComponent(bCancelar)
+                                .addGap(18, 18, 18)
+                                .addComponent(bAtualizar)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lEstadoCivil)
-                            .addComponent(lSexo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(comboSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboEstadoCivil, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lEstadoCivil)
+                                    .addComponent(lSexo))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(comboSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(comboEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lCpf)
+                                    .addComponent(lRg))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(formatoCpf)
+                                    .addComponent(tfRg))))
+                        .addGap(96, 96, 96))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lCpf)
-                            .addComponent(lRg))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(formatoCpf)
-                            .addComponent(tfRg))))
-                .addGap(126, 126, 126))
+                        .addComponent(bExcluir)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bAtualizar, bCadastrar, bCancelar, bExcluir});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -217,9 +303,13 @@ public class telaCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bCadastrar)
-                    .addComponent(bCancelar))
+                    .addComponent(bCancelar)
+                    .addComponent(bAtualizar)
+                    .addComponent(bExcluir))
                 .addGap(30, 30, 30))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {bAtualizar, bCadastrar, bCancelar, bExcluir});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -256,6 +346,20 @@ public class telaCliente extends javax.swing.JFrame {
         
     }//GEN-LAST:event_bCancelarActionPerformed
 
+    private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
+        
+        excluirCliente();
+        dispose();
+        
+    }//GEN-LAST:event_bExcluirActionPerformed
+
+    private void bAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtualizarActionPerformed
+        
+        atualizarCliente();
+        dispose();
+        
+    }//GEN-LAST:event_bAtualizarActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -284,14 +388,20 @@ public class telaCliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new telaCliente().setVisible(true);
+                try {
+                    new telaCliente().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(telaCliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bAtualizar;
     private javax.swing.JButton bCadastrar;
     private javax.swing.JButton bCancelar;
+    private javax.swing.JButton bExcluir;
     private javax.swing.JComboBox comboEstadoCivil;
     private javax.swing.JComboBox comboSexo;
     private javax.swing.JFormattedTextField formatoCpf;

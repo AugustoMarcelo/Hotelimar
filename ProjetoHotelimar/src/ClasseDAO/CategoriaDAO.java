@@ -75,6 +75,30 @@ public class CategoriaDAO {
         return id;
     }
     
+    public String pesquisarCategoria(Categoria obj) throws SQLException{
+        
+        String nome = null;
+        String sql = "SELECT nome FROM categoria c WHERE "
+                + "c.id_categoria = ?";
+        try{
+            
+            pst = con.prepareStatement(sql);
+            pst.setInt(1,obj.getId());            
+            rs = pst.executeQuery();            
+            while(rs.next()){
+            
+               nome = rs.getString("nome"); 
+            }
+            
+        
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null,erro);
+        }
+        //return rs.getInt("id_categoria");
+        return nome;
+    }
+    
     public ArrayList<String> nomesCategoria(){
         
         nomes = new ArrayList<String>();    
