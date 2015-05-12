@@ -15,11 +15,13 @@ public class CategoriaDAO {
     private PreparedStatement pst;
     private Connection con = null;
     private ArrayList<String> nomes;
+    private Categoria cat;
     
     public CategoriaDAO() throws ClassNotFoundException{
     
         ConectaBd conecta = ConectaBd.getInstance();
         con = conecta.conectaBd();
+        cat = new Categoria();
         
     }
     
@@ -71,14 +73,38 @@ public class CategoriaDAO {
         
             JOptionPane.showMessageDialog(null,erro);
         }
-        //return rs.getInt("id_categoria");
+        //JOptionPane.showMessageDialog(null,"id categoria = " + id);
         return id;
     }
     
-    public String pesquisarCategoria(Categoria obj) throws SQLException{
+//    public int pesquisarIdCategoria(Categoria obj) throws SQLException{
+//        
+//        int id = 0;
+//        String sql = "SELECT id_categoria FROM categoria c WHERE "
+//                + "c.nome = ?";
+//        try{
+//            
+//            pst = con.prepareStatement(sql);
+//            pst.setString(1,obj.getNome());            
+//            rs = pst.executeQuery();            
+//            while(rs.next()){
+//            
+//               id = rs.getInt("id_categoria"); 
+//            }
+//            
+//        
+//        }catch(SQLException erro){
+//        
+//            JOptionPane.showMessageDialog(null,erro);
+//        }
+//        //JOptionPane.showMessageDialog(null,"id categoria = " + id);
+//        return id;
+//    }
+    
+    public Categoria pesquisar(Categoria obj) throws SQLException{
         
         String nome = null;
-        String sql = "SELECT nome FROM categoria c WHERE "
+        String sql = "SELECT * FROM categoria c WHERE "
                 + "c.id_categoria = ?";
         try{
             
@@ -87,7 +113,9 @@ public class CategoriaDAO {
             rs = pst.executeQuery();            
             while(rs.next()){
             
-               nome = rs.getString("nome"); 
+               cat.setNome(rs.getString("nome"));
+               cat.setId(rs.getInt("id_categoria"));
+               cat.setPreco(rs.getDouble("preco"));
             }
             
         
@@ -96,7 +124,7 @@ public class CategoriaDAO {
             JOptionPane.showMessageDialog(null,erro);
         }
         //return rs.getInt("id_categoria");
-        return nome;
+        return cat;
     }
     
     public ArrayList<String> nomesCategoria(){

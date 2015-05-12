@@ -29,8 +29,7 @@ public class QuartoDAO {
         String sql = "INSERT INTO quarto (id_categoria,id_frigobar,numero,capacidade,disponibilidade)"
                 + " VALUES (?,?,?,?,?)";
         
-        try{
-            
+        try{            
             pmt = con.prepareStatement(sql);
             pmt.setInt(1,obj.getIdCategoria());
             pmt.setInt(2,obj.getIdFrigobar());
@@ -38,8 +37,7 @@ public class QuartoDAO {
             pmt.setInt(4,obj.getCapacidade());
             pmt.setBoolean(5,obj.isDisponibilidade());
             pmt.execute();
-            JOptionPane.showMessageDialog(null,"Quarto Cadastrado com Sucesso!");
-            
+            JOptionPane.showMessageDialog(null,"Quarto Cadastrado com Sucesso!");            
         
         }catch(SQLException erro){
         
@@ -57,15 +55,15 @@ public class QuartoDAO {
     }
     
     public ArrayList<Quarto> pesquisar(Quarto obj){
-        
+        //JOptionPane.showMessageDialog(null,"vim setar os quartos " + obj.getIdCategoria());
         listQuarto.clear();
         String sql = "SELECT * FROM quarto WHERE id_categoria = ?";
         try{            
             pmt = con.prepareStatement(sql);
-            pmt.setInt(1,obj.getId());
+            //pmt.setInt(1,obj.getId());
+            pmt.setInt(1,obj.getIdCategoria());
             rs = pmt.executeQuery();
-            while(rs.next()){
-                
+            while(rs.next()){                
                 Quarto q = new Quarto();
                 q.setId(rs.getInt("id_quarto"));
                 q.setCapacidade(rs.getInt("capacidade"));
@@ -110,7 +108,26 @@ public class QuartoDAO {
             JOptionPane.showMessageDialog(null, erro);
         }
         
-        return q;
+        return q;    
+    }
+    
+    public ResultSet pesquisarNumQuarto(Quarto obj) throws SQLException{
+        
+        //listQuarto.clear();
+        
+        String sql = "SELECT * FROM quarto WHERE numero = ?";
+        try{            
+            pmt = con.prepareStatement(sql);
+            pmt.setString(1,obj.getNumero());
+            rs = pmt.executeQuery();
+        
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null, erro);
+        }
+        //JOptionPane.showMessageDialog(null,"rs = " + rs.getString("numero"));
+        
+        return rs;
     
     }
     

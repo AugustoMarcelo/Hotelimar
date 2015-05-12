@@ -80,6 +80,56 @@ public class HospedagemDAO {
         return hosp;
     }
     
+    public Hospedagem pesquisarHospedagem(Hospedagem obj){
+    
+        //hosp.setCpf(null);
+        String sql = "SELECT * FROM hospedagem WHERE cpf_cliente = ? AND data_saida = ?";
+        try{
+            
+            pmt = con.prepareStatement(sql);
+            pmt.setString(1,obj.getCpf());
+            pmt.setDate(2,convertUtilToSql(obj.getDataSaida()));
+            rs = pmt.executeQuery();
+            while(rs.next()){
+                //JOptionPane.showMessageDialog(null,rs.getString("cpf_cliente"));
+                hosp.setCpf(rs.getString("cpf_cliente"));
+                hosp.setDataCadastro(rs.getDate("data_cadastro"));
+                hosp.setDataEntrada(rs.getDate("data_entrada"));
+                hosp.setDataSaida(rs.getDate("data_saida"));
+                hosp.setDestino(rs.getString("destino"));
+                hosp.setMotivo(rs.getString("motivo"));
+                hosp.setOrigem(rs.getString("origem")); 
+                hosp.setId_quarto(rs.getInt("id_quarto"));
+                hosp.setId(rs.getInt("id_hospedagem"));
+            }
+            //return hosp;
+        
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null,erro);
+        }
+        return hosp;
+    }
+    
+    public int difDatas(Hospedagem obj){
+        int dias = 0;
+        String sql = "SELECT data_saida - data_entrada AS dias FROM hospedagem WHERE id_hospedagem = ?";
+        try{
+            pmt = con.prepareStatement(sql);
+            pmt.setInt(1,obj.getId());
+            rs = pmt.executeQuery();
+            while(rs.next()){
+            
+                dias = rs.getInt("dias");
+            }
+        
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null, erro);
+        }
+        return dias;
+    }
+    
     private static java.sql.Date convertUtilToSql(java.util.Date uDate) {
 
         java.sql.Date sDate = new java.sql.Date(uDate.getTime());

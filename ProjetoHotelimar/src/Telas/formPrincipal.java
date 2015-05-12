@@ -1,9 +1,5 @@
 package Telas;
 
-import Classes.Categoria;
-import ClasseDAO.ProdutoDAO;
-import static java.lang.System.exit;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,6 +42,9 @@ public class formPrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMQuarto = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         mOpcoes = new javax.swing.JMenu();
         jmSair = new javax.swing.JMenuItem();
 
@@ -157,8 +156,10 @@ public class formPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jmCheckIn);
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/zoom.png"))); // NOI18N
         jMenu1.setText("Pesquisa");
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/user.png"))); // NOI18N
         jMenuItem3.setText("Cliente");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,6 +167,26 @@ public class formPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem3);
+
+        jMQuarto.setText("Quarto");
+
+        jMenuItem4.setText("Por Número");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMQuarto.add(jMenuItem4);
+
+        jMenuItem5.setText("Por Categoria");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMQuarto.add(jMenuItem5);
+
+        jMenu1.add(jMQuarto);
 
         jMenuBar1.add(jMenu1);
 
@@ -192,7 +213,7 @@ public class formPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 292, Short.MAX_VALUE)
+            .addGap(0, 290, Short.MAX_VALUE)
         );
 
         pack();
@@ -218,7 +239,14 @@ public class formPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMiCheckOutActionPerformed
 
     private void jMiCheckOutActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMiCheckOutActionPerformed1
-
+        
+        try {
+            telaChecout telaCheckOut = new telaChecout();
+            telaCheckOut.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jMiCheckOutActionPerformed1
 
     private void jmiCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCheckInActionPerformed
@@ -309,6 +337,33 @@ public class formPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        
+        telaPesquisaQuarto telaPesqQuarto;                
+        try {
+            telaPesqQuarto = new telaPesquisaQuarto("numero");
+            telaPesqQuarto.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        
+        telaPesquisaQuarto tpQuarto;
+        try {
+            tpQuarto = new telaPesquisaQuarto("categoria");
+            tpQuarto.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -352,12 +407,15 @@ public class formPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMCategoria;
     private javax.swing.JMenuItem jMClientes;
     private javax.swing.JMenuItem jMProduto;
+    private javax.swing.JMenu jMQuarto;
     private javax.swing.JMenuItem jMQuartos;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMiCheckOut;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
