@@ -22,6 +22,24 @@ public class telaQuarto extends javax.swing.JFrame {
     private Categoria c;
     private Frigobar fri;
     private FrigobarDAO friDAO;
+    private int idQuarto;
+    
+    public telaQuarto(Quarto q) throws ClassNotFoundException{
+    
+        initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/icones/shape_square_add.png")).getImage());
+        this.setLocationRelativeTo(null);
+        cat = new CategoriaDAO();
+        nomes = cat.nomesCategoria();
+        quarto = new Quarto();
+        obj = new QuartoDAO();  
+        c = new Categoria();
+        fri = new Frigobar();
+        friDAO = new FrigobarDAO();     
+        montarComboCategoria();
+        idQuarto = q.getId();
+        montarTela(q);
+    }
     
 
     public telaQuarto() throws ClassNotFoundException {
@@ -36,12 +54,25 @@ public class telaQuarto extends javax.swing.JFrame {
         fri = new Frigobar();
         friDAO = new FrigobarDAO();
         montarComboCategoria();
+        bAtualizar.setVisible(false);
+        bExcluir.setVisible(false);
+    }
+    
+    public void montarTela(Quarto q){
+        //JOptionPane.showMessageDialog(null,"num = " + q.getNumero());
+        tfNumero.setText(q.getNumero());
+        tfCapacidade.setText(Integer.toString(q.getCapacidade()));
+        comboBoxDisponivel.setSelectedItem(q.isDisponibilidade());
+        bCadastrar.setVisible(false);
+        bAtualizar.setVisible(true);
+        bExcluir.setVisible(true);
+        
     }
     
     public void montarComboCategoria(){
-    
+        //JOptionPane.showMessageDialog(null,"tam = " + nomes.size());
         for(int x = 0; x < nomes.size(); x++){
-        
+            //JOptionPane.showMessageDialog(null,"i = " + x + " dado = " + nomes.get(x));
             comboCategoria.addItem(nomes.get(x));
         }    
     }
@@ -61,6 +92,29 @@ public class telaQuarto extends javax.swing.JFrame {
         quarto.setIdFrigobar(friDAO.pesquisar(fri).getId());
         obj.inserir(quarto);        
     }
+    
+    public void excluirQuarto() throws SQLException{
+    
+        quarto.setNumero(tfNumero.getText());
+        obj.excluir(quarto);
+    }
+    
+    public void atualizarQuarto() throws SQLException{
+    
+        quarto.setCapacidade(Integer.parseInt(tfCapacidade.getText()));
+        quarto.setNumero(tfNumero.getText());   
+        if(comboBoxDisponivel.getSelectedItem().equals("Sim")){        
+            quarto.setDisponibilidade(true);
+        }else{
+               quarto.setDisponibilidade(false);            
+        }
+        c.setNome((String) comboCategoria.getSelectedItem());            
+        quarto.setIdCategoria(cat.pesquisarIdCategoria(c));            
+        quarto.setIdFrigobar(friDAO.pesquisar(fri).getId());
+        quarto.setId(idQuarto);
+        obj.atualizar(quarto);
+        
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -77,6 +131,8 @@ public class telaQuarto extends javax.swing.JFrame {
         bCancelar = new javax.swing.JButton();
         lCategoria = new javax.swing.JLabel();
         comboCategoria = new javax.swing.JComboBox();
+        bAtualizar = new javax.swing.JButton();
+        bExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quarto");
@@ -109,6 +165,22 @@ public class telaQuarto extends javax.swing.JFrame {
 
         comboCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione.." }));
 
+        bAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/picture_edit.png"))); // NOI18N
+        bAtualizar.setText("Atualizar");
+        bAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAtualizarActionPerformed(evt);
+            }
+        });
+
+        bExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/bullet_delete.png"))); // NOI18N
+        bExcluir.setText("Excluir");
+        bExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -136,9 +208,16 @@ public class telaQuarto extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(bCadastrar)
                         .addGap(18, 18, 18)
-                        .addComponent(bCancelar)))
-                .addContainerGap(77, Short.MAX_VALUE))
+                        .addComponent(bCancelar)
+                        .addGap(18, 18, 18)
+                        .addComponent(bAtualizar)
+                        .addGap(18, 18, 18)
+                        .addComponent(bExcluir)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bAtualizar, bCadastrar, bCancelar, bExcluir});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -158,22 +237,30 @@ public class telaQuarto extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lCategoria)
                     .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bCadastrar)
-                    .addComponent(bCancelar))
-                .addGap(64, 64, 64))
+                    .addComponent(bCancelar)
+                    .addComponent(bAtualizar)
+                    .addComponent(bExcluir))
+                .addGap(29, 29, 29))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {bAtualizar, bCadastrar, bCancelar, bExcluir});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -194,6 +281,26 @@ public class telaQuarto extends javax.swing.JFrame {
         dispose();
         
     }//GEN-LAST:event_bCancelarActionPerformed
+
+    private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
+        
+        try {        
+            excluirQuarto();
+        } catch (SQLException ex) {
+            Logger.getLogger(telaQuarto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dispose();
+        
+    }//GEN-LAST:event_bExcluirActionPerformed
+
+    private void bAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtualizarActionPerformed
+        try {
+            atualizarQuarto();
+        } catch (SQLException ex) {
+            Logger.getLogger(telaQuarto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dispose();
+    }//GEN-LAST:event_bAtualizarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -233,8 +340,10 @@ public class telaQuarto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bAtualizar;
     private javax.swing.JButton bCadastrar;
     private javax.swing.JButton bCancelar;
+    private javax.swing.JButton bExcluir;
     private javax.swing.JComboBox comboBoxDisponivel;
     private javax.swing.JComboBox comboCategoria;
     private javax.swing.JPanel jPanel1;

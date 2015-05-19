@@ -127,6 +127,32 @@ public class CategoriaDAO {
         return cat;
     }
     
+    public Categoria pesquisarNome(Categoria obj) throws SQLException{
+        
+        String nome = null;
+        String sql = "SELECT * FROM categoria c WHERE "
+                + "c.nome = ?";
+        try{
+            
+            pst = con.prepareStatement(sql);
+            pst.setString(1,obj.getNome());            
+            rs = pst.executeQuery();            
+            while(rs.next()){
+            
+               cat.setNome(rs.getString("nome"));
+               cat.setId(rs.getInt("id_categoria"));
+               cat.setPreco(rs.getDouble("preco"));
+            }
+            
+        
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null,erro);
+        }
+        //return rs.getInt("id_categoria");
+        return cat;
+    }
+    
     public ArrayList<String> nomesCategoria(){
         
         nomes = new ArrayList<String>();    

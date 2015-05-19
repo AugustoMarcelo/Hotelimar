@@ -45,6 +45,10 @@ public class formPrincipal extends javax.swing.JFrame {
         jMQuarto = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jmItemCategoria = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jmValorDiario = new javax.swing.JMenuItem();
+        jmItemIntervaloDatas = new javax.swing.JMenuItem();
         mOpcoes = new javax.swing.JMenu();
         jmSair = new javax.swing.JMenuItem();
 
@@ -188,7 +192,35 @@ public class formPrincipal extends javax.swing.JFrame {
 
         jMenu1.add(jMQuarto);
 
+        jmItemCategoria.setText("Categoria");
+        jmItemCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmItemCategoriaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmItemCategoria);
+
         jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Relatórios");
+
+        jmValorDiario.setText("Valor Diário");
+        jmValorDiario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmValorDiarioActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmValorDiario);
+
+        jmItemIntervaloDatas.setText("Valor por intervalo de data");
+        jmItemIntervaloDatas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmItemIntervaloDatasActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmItemIntervaloDatas);
+
+        jMenuBar1.add(jMenu2);
 
         mOpcoes.setText("Opções");
 
@@ -209,7 +241,7 @@ public class formPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 475, Short.MAX_VALUE)
+            .addGap(0, 595, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,6 +396,43 @@ public class formPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jmValorDiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmValorDiarioActionPerformed
+        
+        telaRelatorioDiario telaRlt;
+        try {
+            telaRlt = new telaRelatorioDiario();
+            telaRlt.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_jmValorDiarioActionPerformed
+
+    private void jmItemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmItemCategoriaActionPerformed
+        
+        try {
+            telaPesquisaCategoria telaCat = new telaPesquisaCategoria();
+            telaCat.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_jmItemCategoriaActionPerformed
+
+    private void jmItemIntervaloDatasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmItemIntervaloDatasActionPerformed
+        
+        telaRelatorioDiario telaRlt;
+        try {
+            telaRlt = new telaRelatorioDiario(1);
+            telaRlt.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jmItemIntervaloDatasActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -410,6 +479,7 @@ public class formPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMQuarto;
     private javax.swing.JMenuItem jMQuartos;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -424,7 +494,10 @@ public class formPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JMenu jmCheckIn;
     private javax.swing.JMenuItem jmFrigobar;
+    private javax.swing.JMenuItem jmItemCategoria;
+    private javax.swing.JMenuItem jmItemIntervaloDatas;
     private javax.swing.JMenuItem jmSair;
+    private javax.swing.JMenuItem jmValorDiario;
     private javax.swing.JMenuItem jmiCheckIn;
     private javax.swing.JMenu mConfiguracao;
     private javax.swing.JMenu mOpcoes;

@@ -5,6 +5,7 @@ import ClasseDAO.AcessorioDAO;
 import Classes.Categoria;
 import ClasseDAO.CategoriaDAO;
 import java.awt.GridLayout;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -23,6 +24,7 @@ public class telaCategoria extends javax.swing.JFrame {
     private ArrayList<JCheckBox> checks;
     private ArrayList<String> acessorios;
     private AcessorioCategoriaDAO aceDAO;
+    private ResultSet rs;
 
     public telaCategoria() throws ClassNotFoundException {
         initComponents();
@@ -36,6 +38,32 @@ public class telaCategoria extends javax.swing.JFrame {
         quants = new ArrayList<>();
         checkBox();
     }
+    
+    public telaCategoria(Categoria categoria) throws ClassNotFoundException, SQLException {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        aces = new AcessorioDAO();
+        nomesAces = new ArrayList<>();
+        nomesAces = aces.nomesAcessorios();
+        checks = new ArrayList<>();
+        acessorios = new ArrayList<>();
+        aceDAO = new AcessorioCategoriaDAO();
+        quants = new ArrayList<>();
+        rs = aceDAO.pesquisarId(categoria);
+        montarTela(categoria);
+        checkBox(rs);
+        
+        jbCadastrar.setEnabled(false);
+    }
+    
+    public void montarTela(Categoria cat){
+    
+        tfNome.setText(cat.getNome());
+        tfPreco.setText(String.valueOf(cat.getPreco()));
+        
+    }
+    
+    
     
     public void cadastrarCategoria() throws ClassNotFoundException, SQLException{
     
@@ -60,18 +88,61 @@ public class telaCategoria extends javax.swing.JFrame {
         
     }
     
-    public void checkBox(){       
+    public void checkBox(ResultSet rs) throws SQLException{       
         
-        jpCheckbox.setLayout(new GridLayout(nomesAces.size()/2,1));
+        ArrayList<String> nomes = new ArrayList<>();
+        ArrayList<Integer> posicoes = new ArrayList<>();
+        boolean achou = false;
+        //JOptionPane.showMessageDialog(null,rs.next());
+        while(rs.next()){                
+            nomes.add(rs.getString("nome"));            
+        }
         
-        for(int x = 0; x < nomesAces.size(); x++){             
+        for(int x = 0; x < nomes.size(); x++){
+            //JOptionPane.showMessageDialog(null,"Nomes = " + nomes.get(x));
+            for(int j = 0; j < nomesAces.size(); j++){
+                 //JOptionPane.showMessageDialog(null,"acessorios = " + nomesAces.get(j));
+                if(nomesAces.get(j).equals(nomes.get(x))){ 
+                    //JOptionPane.showMessageDialog(null,"encontrado = " + nomes.get(x) + " pos = " + j);
+                    posicoes.add(j);
+                } 
+            }
+        }   
+        
+        jpCheckbox.setLayout(new GridLayout(nomesAces.size()/2,1));        
+        for(int x = 0; x < nomesAces.size(); x++){ 
+            //JOptionPane.showMessageDialog(null,"P = " + posicoes.get(p) + "  x = " + x);
+            achou = verificaPosicao(posicoes,x);
+            if(achou){ 
+                check = new JCheckBox(nomesAces.get(x),true);
+            }else{
+                  check = new JCheckBox(nomesAces.get(x));
+            }
             
+            checks.add(check); 
+            jpCheckbox.add(checks.get(x));           
+       }   
+    }
+    
+    public boolean verificaPosicao(ArrayList<Integer> posicoes, int num){
+    
+        for(int i = 0; i < posicoes.size(); i ++){
+        
+            if(posicoes.get(i) == num){
+            
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void checkBox() {       
+        
+        jpCheckbox.setLayout(new GridLayout(nomesAces.size()/2,1));        
+        for(int x = 0; x < nomesAces.size(); x++){            
             check = new JCheckBox(nomesAces.get(x));
-            checks.add(check);            
-            jpCheckbox.add(checks.get(x)); 
-//            quant = new javax.swing.JTextField();
-//            quants.add(quant);
-//            jpCheckbox.add(quant);            
+            checks.add(check); 
+            jpCheckbox.add(checks.get(x));     
            
        }   
        

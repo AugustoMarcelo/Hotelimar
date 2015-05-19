@@ -38,6 +38,16 @@ public class telaPesquisaQuarto extends javax.swing.JFrame {
     
     public telaPesquisaQuarto(){
     } 
+    
+    public void carregarItensDaTabela() throws ClassNotFoundException{
+    
+        int linha = tbQuarto.getSelectedRow();
+        quarto.setNumero(tbQuarto.getModel().getValueAt(linha,0).toString());
+        JOptionPane.showMessageDialog(null,quarto.getNumero());
+        quarto = qDAO.pesquisarQuarto(quarto);  
+        telaQuarto q = new telaQuarto(quarto);
+        q.setVisible(true);  
+    }
 
     public void habilitarBotoes(String categoria){
     
@@ -144,6 +154,11 @@ public class telaPesquisaQuarto extends javax.swing.JFrame {
                 "Número", "Capacidade", "Disponível", "Categoria"
             }
         ));
+        tbQuarto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbQuartoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbQuarto);
 
         comboCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione.." }));
@@ -241,6 +256,16 @@ public class telaPesquisaQuarto extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_comboCategoriaActionPerformed
+
+    private void tbQuartoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbQuartoMouseClicked
+        
+        try {
+            carregarItensDaTabela();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(telaPesquisaQuarto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_tbQuartoMouseClicked
 
     /**
      * @param args the command line arguments

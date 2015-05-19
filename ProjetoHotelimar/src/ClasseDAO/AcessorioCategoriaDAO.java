@@ -1,5 +1,6 @@
 package ClasseDAO;
 
+import Classes.Categoria;
 import Classes.ConectaBd;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,6 +38,21 @@ public class AcessorioCategoriaDAO {
         
             JOptionPane.showMessageDialog(null, erro);
         }
+    }
+    
+    public ResultSet pesquisarId(Categoria obj){
+        JOptionPane.showMessageDialog(null,"id = " + obj.getId());
+        String sql = "select nome from acessorio where id_acessorio in "
+                + "(select id_acessorio from acessorio_categoria where id_categoria = ?)";
+        try{
+            pst = con.prepareStatement(sql);
+            pst.setInt(1,obj.getId());
+            rs = pst.executeQuery();
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null,erro);
+        }
+        return rs;
     }
     
     
