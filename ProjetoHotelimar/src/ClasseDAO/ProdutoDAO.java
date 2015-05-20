@@ -52,6 +52,18 @@ public class ProdutoDAO {
     }
     
     public void excluir(Produto obj){
+        
+        String sql = "DELETE FROM produto WHERE codigo_barra = ?";
+        try{
+            pmt = con.prepareStatement(sql);
+            pmt.setString(1,obj.getCodigoBarra());
+            pmt.execute();
+            JOptionPane.showMessageDialog(null,"Produto excluído com sucesso!");
+        
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null, erro);
+        }
     
     }
     
@@ -78,6 +90,66 @@ public class ProdutoDAO {
         }
         
         return p;
+    }
+    
+    public Produto pesquisarCod(Produto obj){
+    
+        //JOptionPane.showMessageDialog(null,"cod = " + obj.getCodigoBarra());
+        String sql = "SELECT * FROM produto WHERE codigo_barra = ?";
+        try{
+            
+            pmt = con.prepareStatement(sql);
+            pmt.setString(1,obj.getCodigoBarra());
+            rs = pmt.executeQuery();
+            while(rs.next()){
+            
+                p.setNome(rs.getString("nome"));
+                p.setCodigoBarra(rs.getString("codigo_barra"));
+                p.setDescricao(rs.getString("descricao"));
+                p.setPreco(rs.getDouble("preco"));
+                
+            }
+        
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null,erro);
+        }
+        
+        return p;
+    }
+    
+    public ResultSet pesquisarProdutoRs(Produto obj){
+    
+        String sql = "SELECT * FROM produto WHERE nome = ?";
+        try{
+            
+            pmt = con.prepareStatement(sql);
+            pmt.setString(1,obj.getNome());
+            rs = pmt.executeQuery();          
+        
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null,erro);
+        }
+        
+        return rs;
+    }
+    
+    public ResultSet pesquisarCodProdutoRs(Produto obj){
+    
+        String sql = "SELECT * FROM produto WHERE codigo_barra = ?";
+        try{
+            
+            pmt = con.prepareStatement(sql);
+            pmt.setString(1,obj.getCodigoBarra());
+            rs = pmt.executeQuery();          
+        
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null,erro);
+        }
+        
+        return rs;
     }
     
     public ArrayList<String> pesquisarNomeProduto(){

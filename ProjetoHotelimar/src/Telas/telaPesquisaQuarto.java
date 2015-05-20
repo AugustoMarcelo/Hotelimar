@@ -43,7 +43,7 @@ public class telaPesquisaQuarto extends javax.swing.JFrame {
     
         int linha = tbQuarto.getSelectedRow();
         quarto.setNumero(tbQuarto.getModel().getValueAt(linha,0).toString());
-        JOptionPane.showMessageDialog(null,quarto.getNumero());
+        //JOptionPane.showMessageDialog(null,quarto.getNumero());
         quarto = qDAO.pesquisarQuarto(quarto);  
         telaQuarto q = new telaQuarto(quarto);
         q.setVisible(true);  

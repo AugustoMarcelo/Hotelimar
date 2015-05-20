@@ -6,11 +6,36 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class telaProduto extends javax.swing.JFrame {
+    
+    private Produto prod;
+    private ProdutoDAO prodDAO;
 
-    public telaProduto() {
+    public telaProduto() throws ClassNotFoundException {
+        initComponents();
+        prod = new Produto();
+        prodDAO = new ProdutoDAO();
+        this.setLocationRelativeTo(null);
+        jBatualizar.setEnabled(false);
+        jBExcluir.setEnabled(false);
+        
+    }
+    
+    public telaProduto(Produto p) throws ClassNotFoundException {
         initComponents();
         this.setLocationRelativeTo(null);
+        prod = new Produto();
+        prodDAO = new ProdutoDAO();
+        montarTela(p);
+        jBcadastrar.setEnabled(false);
         
+    }
+    
+    public void montarTela(Produto p){
+    
+        tfNome.setText(p.getNome());
+        tfCodigoBarra.setText(p.getCodigoBarra());
+        tfPreco.setText(String.valueOf(p.getPreco()));
+        taDescricao.setText(p.getDescricao());
     }
     
     public void cadastrarProduto() throws ClassNotFoundException{
@@ -24,6 +49,13 @@ public class telaProduto extends javax.swing.JFrame {
         p.setPreco(Double.parseDouble(tfPreco.getText()));
         
         obj.adicionar(p);
+    }
+    
+    public void excluirProduto(){
+        
+        prod.setCodigoBarra(tfCodigoBarra.getText());
+        prodDAO.excluir(prod);   
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -40,8 +72,10 @@ public class telaProduto extends javax.swing.JFrame {
         tfPreco = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         taDescricao = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        jBcadastrar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
+        jBatualizar = new javax.swing.JButton();
+        jBExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro Produto");
@@ -58,11 +92,11 @@ public class telaProduto extends javax.swing.JFrame {
         taDescricao.setRows(5);
         jScrollPane1.setViewportView(taDescricao);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/accept.png"))); // NOI18N
-        jButton1.setText("Cadastrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBcadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/accept.png"))); // NOI18N
+        jBcadastrar.setText("Cadastrar");
+        jBcadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBcadastrarActionPerformed(evt);
             }
         });
 
@@ -74,14 +108,30 @@ public class telaProduto extends javax.swing.JFrame {
             }
         });
 
+        jBatualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/folder_edit.png"))); // NOI18N
+        jBatualizar.setText("Atualizar");
+        jBatualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBatualizarActionPerformed(evt);
+            }
+        });
+
+        jBExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/package_delete.png"))); // NOI18N
+        jBExcluir.setText("Excluir");
+        jBExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lNome)
                             .addComponent(lCodigoBarra)
@@ -95,14 +145,17 @@ public class telaProduto extends javax.swing.JFrame {
                                 .addComponent(tfCodigoBarra, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(tfNome, javax.swing.GroupLayout.Alignment.LEADING))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton1)
-                        .addGap(39, 39, 39)
-                        .addComponent(bCancelar)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                        .addComponent(jBcadastrar)
+                        .addGap(18, 18, 18)
+                        .addComponent(bCancelar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBatualizar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBExcluir)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bCancelar, jButton1});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bCancelar, jBExcluir, jBatualizar, jBcadastrar});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,19 +182,19 @@ public class telaProduto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bCancelar)
-                    .addComponent(jButton1))
+                    .addComponent(jBcadastrar)
+                    .addComponent(jBatualizar)
+                    .addComponent(jBExcluir))
                 .addGap(23, 23, 23))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {bCancelar, jButton1});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {bCancelar, jBExcluir, jBatualizar, jBcadastrar});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,7 +206,7 @@ public class telaProduto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBcadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcadastrarActionPerformed
         
         try {
             cadastrarProduto();
@@ -162,13 +215,23 @@ public class telaProduto extends javax.swing.JFrame {
         }
         dispose();
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBcadastrarActionPerformed
 
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
         
         dispose();
         
     }//GEN-LAST:event_bCancelarActionPerformed
+
+    private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
+        
+        excluirProduto();
+        dispose();
+    }//GEN-LAST:event_jBExcluirActionPerformed
+
+    private void jBatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBatualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBatualizarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -198,14 +261,20 @@ public class telaProduto extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new telaProduto().setVisible(true);
+                try {
+                    new telaProduto().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(telaProduto.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bCancelar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBExcluir;
+    private javax.swing.JButton jBatualizar;
+    private javax.swing.JButton jBcadastrar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lCodigoBarra;

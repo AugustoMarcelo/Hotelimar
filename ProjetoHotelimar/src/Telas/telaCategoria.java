@@ -24,6 +24,8 @@ public class telaCategoria extends javax.swing.JFrame {
     private ArrayList<JCheckBox> checks;
     private ArrayList<String> acessorios;
     private AcessorioCategoriaDAO aceDAO;
+    private Categoria cat;
+    private CategoriaDAO obj;
     private ResultSet rs;
 
     public telaCategoria() throws ClassNotFoundException {
@@ -36,6 +38,10 @@ public class telaCategoria extends javax.swing.JFrame {
         acessorios = new ArrayList<>();
         aceDAO = new AcessorioCategoriaDAO();
         quants = new ArrayList<>();
+        jbAtualizar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        cat = new Categoria();
+        obj = new CategoriaDAO();
         checkBox();
     }
     
@@ -49,10 +55,12 @@ public class telaCategoria extends javax.swing.JFrame {
         acessorios = new ArrayList<>();
         aceDAO = new AcessorioCategoriaDAO();
         quants = new ArrayList<>();
+        //cat = new Categoria();
+        cat = categoria;
+        obj = new CategoriaDAO();
         rs = aceDAO.pesquisarId(categoria);
         montarTela(categoria);
-        checkBox(rs);
-        
+        checkBox(rs);        
         jbCadastrar.setEnabled(false);
     }
     
@@ -68,8 +76,7 @@ public class telaCategoria extends javax.swing.JFrame {
     public void cadastrarCategoria() throws ClassNotFoundException, SQLException{
     
         int idCategoria,idAcessorio;
-        Categoria cat = new Categoria();
-        CategoriaDAO obj = new CategoriaDAO();
+        
         AcessorioDAO aces = new AcessorioDAO();
         
         cat.setNome(tfNome.getText());
@@ -92,18 +99,14 @@ public class telaCategoria extends javax.swing.JFrame {
         
         ArrayList<String> nomes = new ArrayList<>();
         ArrayList<Integer> posicoes = new ArrayList<>();
-        boolean achou = false;
-        //JOptionPane.showMessageDialog(null,rs.next());
+        boolean achou = false;        
         while(rs.next()){                
             nomes.add(rs.getString("nome"));            
         }
         
         for(int x = 0; x < nomes.size(); x++){
-            //JOptionPane.showMessageDialog(null,"Nomes = " + nomes.get(x));
             for(int j = 0; j < nomesAces.size(); j++){
-                 //JOptionPane.showMessageDialog(null,"acessorios = " + nomesAces.get(j));
                 if(nomesAces.get(j).equals(nomes.get(x))){ 
-                    //JOptionPane.showMessageDialog(null,"encontrado = " + nomes.get(x) + " pos = " + j);
                     posicoes.add(j);
                 } 
             }
@@ -111,7 +114,6 @@ public class telaCategoria extends javax.swing.JFrame {
         
         jpCheckbox.setLayout(new GridLayout(nomesAces.size()/2,1));        
         for(int x = 0; x < nomesAces.size(); x++){ 
-            //JOptionPane.showMessageDialog(null,"P = " + posicoes.get(p) + "  x = " + x);
             achou = verificaPosicao(posicoes,x);
             if(achou){ 
                 check = new JCheckBox(nomesAces.get(x),true);
@@ -147,6 +149,19 @@ public class telaCategoria extends javax.swing.JFrame {
        }   
        
     }
+    
+    public void excluirCategoria(){
+    
+        cat.setNome(tfNome.getText());
+        obj.excluir(cat);
+    }
+    
+    public void atualizarCategoria(){
+    
+        cat.setNome(tfNome.getText());
+        cat.setPreco(Double.parseDouble(tfPreco.getText()));         
+        obj.atualizar(cat);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -162,11 +177,14 @@ public class telaCategoria extends javax.swing.JFrame {
         jbCancelar = new javax.swing.JButton();
         jpCheckbox = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jbAtualizar = new javax.swing.JButton();
+        jbExcluir = new javax.swing.JButton();
 
         jCheckBox1.setText("jCheckBox1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Categoria");
+        setResizable(false);
 
         lNome.setText("Nome:");
 
@@ -203,6 +221,22 @@ public class telaCategoria extends javax.swing.JFrame {
 
         jLabel1.setText("Acessorios:");
 
+        jbAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/folder_edit.png"))); // NOI18N
+        jbAtualizar.setText("Atualizar");
+        jbAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAtualizarActionPerformed(evt);
+            }
+        });
+
+        jbExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/application_form_delete.png"))); // NOI18N
+        jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -223,14 +257,20 @@ public class telaCategoria extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jbCadastrar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbCancelar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jpCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jbCadastrar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbCancelar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbAtualizar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbExcluir))
+                            .addComponent(jpCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 22, Short.MAX_VALUE))))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbCadastrar, jbCancelar});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbAtualizar, jbCadastrar, jbCancelar, jbExcluir});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,14 +287,16 @@ public class telaCategoria extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCadastrar)
-                    .addComponent(jbCancelar))
+                    .addComponent(jbCancelar)
+                    .addComponent(jbAtualizar)
+                    .addComponent(jbExcluir))
                 .addGap(48, 48, 48))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jbCadastrar, jbCancelar});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jbAtualizar, jbCadastrar, jbCancelar, jbExcluir});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -292,6 +334,18 @@ public class telaCategoria extends javax.swing.JFrame {
         dispose();
         
     }//GEN-LAST:event_jbCancelarActionPerformed
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        
+        excluirCategoria();
+        
+    }//GEN-LAST:event_jbExcluirActionPerformed
+
+    private void jbAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAtualizarActionPerformed
+        
+        atualizarCategoria();
+        
+    }//GEN-LAST:event_jbAtualizarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -334,8 +388,10 @@ public class telaCategoria extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jbAtualizar;
     private javax.swing.JButton jbCadastrar;
     private javax.swing.JButton jbCancelar;
+    private javax.swing.JButton jbExcluir;
     private javax.swing.JPanel jpCheckbox;
     private javax.swing.JLabel lNome;
     private javax.swing.JLabel lPreco;
