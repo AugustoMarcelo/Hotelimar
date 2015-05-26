@@ -2,13 +2,14 @@ package Telas;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 public class formPrincipal extends javax.swing.JFrame {
     
 
     public formPrincipal() {
         initComponents();
-
+        this.setIconImage(new ImageIcon(getClass().getResource("/icones/logo hotelimar.png")).getImage());
         this.setSize(1000, 500);
         this.setLocationRelativeTo(null);
         //testando tarefa 00_7
@@ -50,6 +51,7 @@ public class formPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItemNumero = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItemAcessorio = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jmValorDiario = new javax.swing.JMenuItem();
         jmItemIntervaloDatas = new javax.swing.JMenuItem();
@@ -208,8 +210,10 @@ public class formPrincipal extends javax.swing.JFrame {
         });
         jMenuProduto.add(jmItemCategoria);
 
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/package.png"))); // NOI18N
         jMenu3.setText("Produto");
 
+        jMenuItemNumero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/text_allcaps.png"))); // NOI18N
         jMenuItemNumero.setText("Por Nome");
         jMenuItemNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,6 +222,7 @@ public class formPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItemNumero);
 
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/codigo_barra.png"))); // NOI18N
         jMenuItem7.setText("Por Código de barra");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,6 +232,14 @@ public class formPrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem7);
 
         jMenuProduto.add(jMenu3);
+
+        jMenuItemAcessorio.setText("Acessório");
+        jMenuItemAcessorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAcessorioActionPerformed(evt);
+            }
+        });
+        jMenuProduto.add(jMenuItemAcessorio);
 
         jMenuBar1.add(jMenuProduto);
 
@@ -273,7 +286,7 @@ public class formPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 290, Short.MAX_VALUE)
+            .addGap(0, 245, Short.MAX_VALUE)
         );
 
         pack();
@@ -336,8 +349,14 @@ public class formPrincipal extends javax.swing.JFrame {
 
     private void jMAcessorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMAcessorioActionPerformed
 
-        telaAcessorio telaAces = new telaAcessorio();
-        telaAces.setVisible(true);
+        telaAcessorio telaAces;
+        try {
+            telaAces = new telaAcessorio();
+            telaAces.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
     }//GEN-LAST:event_jMAcessorioActionPerformed
 
@@ -491,10 +510,19 @@ public class formPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItemAcessorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAcessorioActionPerformed
+        
+        try {
+            telaPesquisaAcessorio telaAce = new telaPesquisaAcessorio();
+            telaAce.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_jMenuItemAcessorioActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -546,6 +574,7 @@ public class formPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItemAcessorio;
     private javax.swing.JMenuItem jMenuItemNumero;
     private javax.swing.JMenu jMenuProduto;
     private javax.swing.JMenuItem jMiCheckOut;

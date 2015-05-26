@@ -6,10 +6,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class telaAcessorio extends javax.swing.JFrame {
+    
+    private Acessorio acessorio;
+    private AcessorioDAO acessorioDAO;
 
-    public telaAcessorio() {
+    public telaAcessorio() throws ClassNotFoundException {
         initComponents();
         this.setLocationRelativeTo(null);
+        acessorioDAO = new AcessorioDAO();
+        acessorio = new Acessorio();
+        jBAtualizar.setEnabled(false);
+        jBExcluir.setEnabled(false);
+    }
+    
+    public telaAcessorio(Acessorio ace) throws ClassNotFoundException {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        acessorio = ace;
+        jbCadastrar.setEnabled(false);
+        acessorioDAO = new AcessorioDAO();
+        montarTela();
     }
     
     public void cadastrarAcessorio() throws ClassNotFoundException{
@@ -21,6 +37,24 @@ public class telaAcessorio extends javax.swing.JFrame {
         aces.setDescricao(taDescricao.getText());
         
         obj.adicionar(aces);
+    }
+    
+    public void montarTela(){
+    
+        tfNome.setText(acessorio.getNome());
+        taDescricao.setText(acessorio.getDescricao());
+    }
+    
+    public void excluirAcessorio(){
+    
+        acessorioDAO.excluir(acessorio);
+    }
+    
+    public void atualizarAcessorio(){
+    
+        acessorio.setNome(tfNome.getText());
+        acessorio.setDescricao(taDescricao.getText());
+        acessorioDAO.atualizar(acessorio);
     }
 
     @SuppressWarnings("unchecked")
@@ -35,6 +69,8 @@ public class telaAcessorio extends javax.swing.JFrame {
         taDescricao = new javax.swing.JTextArea();
         jbCadastrar = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
+        jBAtualizar = new javax.swing.JButton();
+        jBExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tela Acessorios");
@@ -63,14 +99,30 @@ public class telaAcessorio extends javax.swing.JFrame {
             }
         });
 
+        jBAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/script_edit.png"))); // NOI18N
+        jBAtualizar.setText("Atualizar");
+        jBAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAtualizarActionPerformed(evt);
+            }
+        });
+
+        jBExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/script_delete.png"))); // NOI18N
+        jBExcluir.setText("Excluir");
+        jBExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lNome)
                             .addComponent(lDescricao))
@@ -79,14 +131,17 @@ public class telaAcessorio extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
                             .addComponent(tfNome)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
                         .addComponent(jbCadastrar)
                         .addGap(18, 18, 18)
-                        .addComponent(jbCancelar)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                        .addComponent(jbCancelar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBAtualizar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBExcluir)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbCadastrar, jbCancelar});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jBAtualizar, jBExcluir, jbCadastrar, jbCancelar});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,11 +157,13 @@ public class telaAcessorio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCadastrar)
-                    .addComponent(jbCancelar))
+                    .addComponent(jbCancelar)
+                    .addComponent(jBAtualizar)
+                    .addComponent(jBExcluir))
                 .addGap(27, 27, 27))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jbCadastrar, jbCancelar});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBAtualizar, jBExcluir, jbCadastrar, jbCancelar});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,6 +196,19 @@ public class telaAcessorio extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jbCadastrarActionPerformed
 
+    private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
+        
+        excluirAcessorio();
+        dispose();
+    }//GEN-LAST:event_jBExcluirActionPerformed
+
+    private void jBAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtualizarActionPerformed
+        
+        atualizarAcessorio();
+        dispose();
+        
+    }//GEN-LAST:event_jBAtualizarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -170,12 +240,18 @@ public class telaAcessorio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new telaAcessorio().setVisible(true);
+                try {
+                    new telaAcessorio().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(telaAcessorio.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBAtualizar;
+    private javax.swing.JButton jBExcluir;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbCadastrar;
@@ -185,4 +261,6 @@ public class telaAcessorio extends javax.swing.JFrame {
     private javax.swing.JTextArea taDescricao;
     private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables
+
+    
 }

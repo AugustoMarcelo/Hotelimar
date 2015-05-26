@@ -29,17 +29,14 @@ public class ProdutoDAO {
         
         String sql = "INSERT INTO produto (nome,codigo_barra,descricao,preco) VALUES (?,?,?,?)";
         
-        try{
-            
+        try{            
             pmt = con.prepareStatement(sql);
             pmt.setString(1,obj.getNome());
             pmt.setString(2,obj.getCodigoBarra());
             pmt.setString(3,obj.getDescricao());
-            pmt.setDouble(4,obj.getPreco());
-            
+            pmt.setDouble(4,obj.getPreco());            
             pmt.execute();
-            JOptionPane.showMessageDialog(null,"Produto Cadastrado com Sucesso!");
-        
+            JOptionPane.showMessageDialog(null,"Produto Cadastrado com Sucesso!");        
         }catch(SQLException erro){
         
             JOptionPane.showMessageDialog(null,erro);
@@ -48,6 +45,22 @@ public class ProdutoDAO {
     }
     
     public void atualizar(Produto obj){
+        //JOptionPane.showMessageDialog(null,"id = " + obj.getId());
+        String sql = "UPDATE produto SET codigo_barra = ?, nome = ?, descricao = ?, preco = ?"
+                + " WHERE id_produto = ?";
+        try{
+            pmt = con.prepareStatement(sql);
+            pmt.setString(1,obj.getCodigoBarra());
+            pmt.setString(2,obj.getNome());
+            pmt.setString(3,obj.getDescricao());
+            pmt.setDouble(4,obj.getPreco());
+            pmt.setInt(5,obj.getId());
+            pmt.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Produto atualizado com sucesso!");
+        
+        }catch(SQLException erro){        
+            JOptionPane.showMessageDialog(null, erro);
+        }
     
     }
     
@@ -81,6 +94,7 @@ public class ProdutoDAO {
                 p.setCodigoBarra(rs.getString("codigo_barra"));
                 p.setDescricao(rs.getString("descricao"));
                 p.setPreco(rs.getDouble("preco"));
+                p.setId(rs.getInt("id_produto"));
                 
             }
         
@@ -107,6 +121,7 @@ public class ProdutoDAO {
                 p.setCodigoBarra(rs.getString("codigo_barra"));
                 p.setDescricao(rs.getString("descricao"));
                 p.setPreco(rs.getDouble("preco"));
+                p.setId(rs.getInt("id_produto"));
                 
             }
         
@@ -144,8 +159,7 @@ public class ProdutoDAO {
             pmt.setString(1,obj.getCodigoBarra());
             rs = pmt.executeQuery();          
         
-        }catch(SQLException erro){
-        
+        }catch(SQLException erro){        
             JOptionPane.showMessageDialog(null,erro);
         }
         
@@ -175,8 +189,7 @@ public class ProdutoDAO {
         
         return nomesProduto;    
             
-    }
-        
+    }       
         
     
 }

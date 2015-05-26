@@ -23,7 +23,7 @@ public class telaProduto extends javax.swing.JFrame {
     public telaProduto(Produto p) throws ClassNotFoundException {
         initComponents();
         this.setLocationRelativeTo(null);
-        prod = new Produto();
+        prod = p;
         prodDAO = new ProdutoDAO();
         montarTela(p);
         jBcadastrar.setEnabled(false);
@@ -56,6 +56,15 @@ public class telaProduto extends javax.swing.JFrame {
         prod.setCodigoBarra(tfCodigoBarra.getText());
         prodDAO.excluir(prod);   
         
+    }
+    
+    public void atualizarProduto(){
+    
+        prod.setCodigoBarra(tfCodigoBarra.getText());
+        prod.setDescricao(taDescricao.getText());
+        prod.setNome(tfNome.getText());
+        prod.setPreco(Double.parseDouble(tfPreco.getText()));
+        prodDAO.atualizar(prod);
     }
 
     @SuppressWarnings("unchecked")
@@ -230,7 +239,10 @@ public class telaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jBExcluirActionPerformed
 
     private void jBatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBatualizarActionPerformed
-        // TODO add your handling code here:
+       
+        atualizarProduto();   
+        dispose();
+                
     }//GEN-LAST:event_jBatualizarActionPerformed
 
     public static void main(String args[]) {

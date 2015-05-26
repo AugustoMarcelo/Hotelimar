@@ -89,10 +89,8 @@ public class telaCategoria extends javax.swing.JFrame {
                 //aces.atualizarIdAcessorio(idCategoria,checks.get(x).getText());
                 idAcessorio = aces.pesquisar(checks.get(x).getText()).getId();
                 aceDAO.adicionar(idCategoria, idAcessorio);
-            }
-            
-        }
-        
+            }            
+        }        
     }
     
     public void checkBox(ResultSet rs) throws SQLException{       
@@ -156,11 +154,20 @@ public class telaCategoria extends javax.swing.JFrame {
         obj.excluir(cat);
     }
     
-    public void atualizarCategoria(){
+    public void atualizarCategoria() throws SQLException{
     
+        int idCategoria,idAcessorio;
         cat.setNome(tfNome.getText());
-        cat.setPreco(Double.parseDouble(tfPreco.getText()));         
+        cat.setPreco(Double.parseDouble(tfPreco.getText()));
         obj.atualizar(cat);
+        idCategoria = obj.pesquisarIdCategoria(cat);
+        aceDAO.excluir(idCategoria);
+        for(int x = 0; x < checks.size(); x++){
+            if(checks.get(x).isSelected()){
+                idAcessorio = aces.pesquisar(checks.get(x).getText()).getId();
+                aceDAO.adicionar(idCategoria, idAcessorio);
+            }            
+        }    
     }
 
     @SuppressWarnings("unchecked")
@@ -327,10 +334,6 @@ public class telaCategoria extends javax.swing.JFrame {
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
         
-//        for(int x = 0; x < quants.size(); x++){
-//        
-//            JOptionPane.showMessageDialog(null,quants.get(x).getText());
-//        }
         dispose();
         
     }//GEN-LAST:event_jbCancelarActionPerformed
@@ -338,12 +341,18 @@ public class telaCategoria extends javax.swing.JFrame {
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
         
         excluirCategoria();
+        dispose();
         
     }//GEN-LAST:event_jbExcluirActionPerformed
 
     private void jbAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAtualizarActionPerformed
         
-        atualizarCategoria();
+        try {
+            atualizarCategoria();
+        } catch (SQLException ex) {
+            Logger.getLogger(telaCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dispose();
         
     }//GEN-LAST:event_jbAtualizarActionPerformed
 

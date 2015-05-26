@@ -43,6 +43,24 @@ public class AcessorioDAO {
     
     }
     
+    public void atualizar(Acessorio obj){
+        
+        String sql = "UPDATE acessorio SET nome = ?, descricao = ? WHERE id_acessorio = ?";
+        try{
+            pmt = con.prepareStatement(sql);
+            pmt.setString(1,obj.getNome());
+            pmt.setString(2,obj.getDescricao());
+            pmt.setInt(3,obj.getId());
+            pmt.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Acessório atualizado com sucesso!");
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null, erro);
+        }
+    
+        
+    }
+    
     public void atualizarIdAcessorio(int id,String nome){
         
         String sql = "UPDATE acessorio set id_categoria = ? WHERE  nome = ?";
@@ -62,6 +80,17 @@ public class AcessorioDAO {
     }
     
     public void excluir(Acessorio obj){
+        
+        JOptionPane.showMessageDialog(null,"nome = " + obj.getId());
+        String sql = "DELETE FROM acessorio WHERE nome = ?";
+        try{
+            pmt = con.prepareStatement(sql);
+            pmt.setString(1,obj.getNome());
+            pmt.execute();
+            JOptionPane.showMessageDialog(null,"Acessório excluído com sucesso!");
+        }catch(SQLException erro){
+            JOptionPane.showMessageDialog(null, erro);
+        }
     
     }
     
@@ -73,8 +102,7 @@ public class AcessorioDAO {
             pmt = con.prepareStatement(sql);
             pmt.setString(1,nome);
             rs = pmt.executeQuery();
-            while(rs.next()){
-            
+            while(rs.next()){            
                 acessorio = new Acessorio();
                 acessorio.setId(rs.getInt("id_acessorio"));
                 acessorio.setNome(rs.getString("nome"));

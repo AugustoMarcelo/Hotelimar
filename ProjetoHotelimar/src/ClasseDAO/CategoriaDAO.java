@@ -46,9 +46,8 @@ public class CategoriaDAO {
     }
     
     public void atualizar(Categoria obj){
-        JOptionPane.showMessageDialog(null,"id = " + obj.getId());
-        String sql = "UPDATE categoria SET nome = ?, preco = ? WHERE id_categoria = ?";
-                
+        
+        String sql = "UPDATE categoria SET nome = ?, preco = ? WHERE id_categoria = ?";                
         try{
             pst = con.prepareStatement(sql);
             pst.setString(1,obj.getNome());
@@ -66,14 +65,12 @@ public class CategoriaDAO {
     
     public void excluir(Categoria obj){
         
-        String sql = "DELETE from categoria WHERE nome = ?";
-        JOptionPane.showMessageDialog(null, "nome = " + obj.getNome());
+        String sql = "DELETE from categoria WHERE nome = ?";        
         try{
             pst = con.prepareStatement(sql);
             pst.setString(1,obj.getNome());
             pst.execute();
-            JOptionPane.showMessageDialog(null,"Categoria Excluída Com Sucesso!");
-        
+            JOptionPane.showMessageDialog(null,"Categoria Excluída Com Sucesso!");        
         }catch(SQLException erro){
         
             JOptionPane.showMessageDialog(null, erro);
