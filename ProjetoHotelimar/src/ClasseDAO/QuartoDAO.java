@@ -47,6 +47,21 @@ public class QuartoDAO {
         
     }
     
+    public ResultSet retornarCategoriaQuarto(int id){
+    
+        String sql = "select q.numero, c.nome from quarto q, categoria c where id_quarto = ? and "
+                + "c.id_categoria = q.id_categoria;";
+        try{
+            pmt = con.prepareStatement(sql);
+            JOptionPane.showMessageDialog(null,pmt);
+            pmt.setInt(1, id);
+            rs = pmt.executeQuery();
+        }catch(SQLException erro){        
+            JOptionPane.showMessageDialog(null, erro);
+        }
+        return rs;
+    }
+    
     public void atualizar(Quarto obj){
         
         String sql = "UPDATE quarto SET id_categoria = ?,id_frigobar = ?,numero = ?,"

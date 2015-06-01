@@ -500,8 +500,11 @@ public class telaChecout extends javax.swing.JFrame {
     }//GEN-LAST:event_bPesquisar2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-        registrarCheckout();
+        try{
+            registrarCheckout();
+        }catch(Exception erro){
+            JOptionPane.showMessageDialog(null,"Nenhum Check-out realizado!");
+        }
         dispose();
         
     }//GEN-LAST:event_jButton2ActionPerformed

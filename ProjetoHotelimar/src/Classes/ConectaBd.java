@@ -40,8 +40,7 @@ public class ConectaBd {
             }catch (SQLException erro){
                 
                 JOptionPane.showMessageDialog(null,erro);            
-            }
-        
+            }      
         
         return conexao;
     }  

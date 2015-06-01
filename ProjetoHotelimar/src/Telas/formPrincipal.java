@@ -1,8 +1,10 @@
 package Telas;
 
+import Classes.Backup;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class formPrincipal extends javax.swing.JFrame {
     
@@ -14,9 +16,7 @@ public class formPrincipal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         //testando tarefa 00_7
 
-        }
-    
-    
+    }   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -52,10 +52,12 @@ public class formPrincipal extends javax.swing.JFrame {
         jMenuItemNumero = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItemAcessorio = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jmValorDiario = new javax.swing.JMenuItem();
         jmItemIntervaloDatas = new javax.swing.JMenuItem();
         mOpcoes = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jmSair = new javax.swing.JMenuItem();
 
         jList1.setModel(new javax.swing.AbstractListModel() {
@@ -233,6 +235,7 @@ public class formPrincipal extends javax.swing.JFrame {
 
         jMenuProduto.add(jMenu3);
 
+        jMenuItemAcessorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/script_edit.png"))); // NOI18N
         jMenuItemAcessorio.setText("Acessório");
         jMenuItemAcessorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,6 +243,14 @@ public class formPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuProduto.add(jMenuItemAcessorio);
+
+        jMenuItem9.setText("Reserva");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenuProduto.add(jMenuItem9);
 
         jMenuBar1.add(jMenuProduto);
 
@@ -264,6 +275,15 @@ public class formPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         mOpcoes.setText("Opções");
+
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/database.png"))); // NOI18N
+        jMenuItem8.setText("Fazer Backup");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        mOpcoes.add(jMenuItem8);
 
         jmSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/sair.png"))); // NOI18N
         jmSair.setText("Sair");
@@ -522,6 +542,25 @@ public class formPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItemAcessorioActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        
+        Backup bck = new Backup();
+        bck.fazerBackup();
+        
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        
+        try {
+            telaPesquisaReserva telaPesquisaReserva = new telaPesquisaReserva();
+            telaPesquisaReserva.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -574,6 +613,8 @@ public class formPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem jMenuItemAcessorio;
     private javax.swing.JMenuItem jMenuItemNumero;
     private javax.swing.JMenu jMenuProduto;

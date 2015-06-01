@@ -6,6 +6,7 @@ import ClasseDAO.QuartoDAO;
 import Classes.Categoria;
 import Classes.Hospedagem;
 import Classes.Quarto;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,11 +18,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
-import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 
 public class telaHospedagem extends javax.swing.JFrame {
     
-    private Hospedagem hosp;
+    private Hospedagem hosp,hospedagem;
     private HospedagemDAO hospDAO;
     private CategoriaDAO cat;
     private Categoria ctg;
@@ -29,6 +29,7 @@ public class telaHospedagem extends javax.swing.JFrame {
     private QuartoDAO quartoDAO;
     private ArrayList<String> nomes;
     private ArrayList<Quarto> listQuarto;
+    private ResultSet rs;
 
     public telaHospedagem() throws ClassNotFoundException {
         initComponents();
@@ -45,6 +46,23 @@ public class telaHospedagem extends javax.swing.JFrame {
         
     }
     
+    public telaHospedagem(Hospedagem hosp2) throws ClassNotFoundException, SQLException {
+        initComponents();
+        this.setLocationRelativeTo(null);  
+        hosp = new Hospedagem();
+        hospedagem = hosp2;
+        hospDAO = new HospedagemDAO();
+        cat = new CategoriaDAO();
+        nomes = cat.nomesCategoria();
+        ctg = new Categoria();
+        quarto = new Quarto();
+        quartoDAO = new QuartoDAO();
+        bPesquisarReserva.setVisible(false);
+        montarComboCategoria();
+        montarTela(hosp2);
+        
+    }
+    
     public telaHospedagem(String tela) throws ClassNotFoundException {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -58,6 +76,37 @@ public class telaHospedagem extends javax.swing.JFrame {
         quartoDAO = new QuartoDAO();        
         setarData();
         montarComboCategoria();
+    }
+    
+    public void montarTela(Hospedagem hosp) throws SQLException{
+    
+        //JOptionPane.showMessageDialog(null,"h = " + hosp.get());
+        rs = quartoDAO.retornarCategoriaQuarto(hosp.getId_quarto());
+        tfCpf.setText(hosp.getCpf());
+        tfOrigem.setText(hosp.getOrigem());
+        tfDestino.setText(hosp.getDestino());
+        taMotivo.setText(hosp.getMotivo());
+        ftDataEntrada.setText(converterNoFormatobrasil(hosp.getDataEntrada().toString()));
+        ftDataSaida.setText(converterNoFormatobrasil(hosp.getDataSaida().toString())); 
+        if(hospedagem.isStatus() == true){
+            jComboStatus.setSelectedItem("Realizado");
+        }else{
+            jComboStatus.setSelectedItem("Pendente");
+        }
+        while(rs.next()){
+            jComboCategoria.setSelectedItem(rs.getString("nome"));
+            jComboQuarto.setSelectedItem(rs.getString("numero"));            
+        }      
+        
+    }
+    
+    public String converterNoFormatobrasil(String data){    
+        
+        String ano = data.substring(0,4);
+        String mes = data.substring(5, 7);
+        String dia = data.substring(8, 10);        
+        String dataBrasil = dia + "/" + mes + "/" + ano;
+        return dataBrasil;
     }
     
     public void montarComboCategoria(){
@@ -140,6 +189,35 @@ public class telaHospedagem extends javax.swing.JFrame {
             return false;
         }
     }
+    
+    public void excluirHospedagem(){
+    
+        JOptionPane.showMessageDialog(null,"h = " + hospedagem.getId());
+        hospDAO.excluir(hospedagem);
+    }
+    
+    public void atualizarHospedagem() throws ParseException{
+    
+        hosp.setId(hospedagem.getId());
+        hosp.setCpf(tfCpf.getText());        
+        hosp.setDataEntrada(converterData(ftDataEntrada.getText()));
+        hosp.setDataSaida(converterData(ftDataSaida.getText())); 
+        JOptionPane.showMessageDialog(null, hospedagem.getDataCadastro().toString());        
+        hosp.setDataCadastro(converterData(converterNoFormatobrasil(hospedagem.getDataCadastro().toString())));
+        hosp.setDestino(tfDestino.getText());
+        int id = idQuarto((String) jComboQuarto.getSelectedItem());        
+        hosp.setId_quarto(id);
+        hosp.setMotivo(taMotivo.getText());
+        hosp.setOrigem(tfOrigem.getText());
+        if(jComboStatus.getSelectedItem().toString().equals("Pendente")){
+            hosp.setStatus(false);
+        }else{
+            hosp.setStatus(true);
+        }
+      
+        hospDAO.atualizar(hosp);
+        
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -148,6 +226,8 @@ public class telaHospedagem extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jBatualizar = new javax.swing.JButton();
+        jBexcluir = new javax.swing.JButton();
         lCpf = new javax.swing.JLabel();
         tfCpf = new javax.swing.JFormattedTextField();
         bPesquisarReserva = new javax.swing.JButton();
@@ -166,6 +246,8 @@ public class telaHospedagem extends javax.swing.JFrame {
         lDataEntrada = new javax.swing.JLabel();
         ftDataEntrada = new javax.swing.JFormattedTextField();
         ftDataSaida = new javax.swing.JFormattedTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jComboStatus = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -185,6 +267,22 @@ public class telaHospedagem extends javax.swing.JFrame {
             }
         });
 
+        jBatualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/calendar_edit.png"))); // NOI18N
+        jBatualizar.setText("Atualizar");
+        jBatualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBatualizarActionPerformed(evt);
+            }
+        });
+
+        jBexcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/calendar_delete.png"))); // NOI18N
+        jBexcluir.setText("Excluir");
+        jBexcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBexcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -194,10 +292,14 @@ public class telaHospedagem extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
+                .addGap(18, 18, 18)
+                .addComponent(jBatualizar)
+                .addGap(18, 18, 18)
+                .addComponent(jBexcluir)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jBatualizar, jBexcluir, jButton1, jButton2});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,10 +307,12 @@ public class telaHospedagem extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)))
+                    .addComponent(jButton2)
+                    .addComponent(jBatualizar)
+                    .addComponent(jBexcluir)))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBatualizar, jBexcluir, jButton1, jButton2});
 
         lCpf.setText("CPF:");
 
@@ -269,6 +373,10 @@ public class telaHospedagem extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        jLabel1.setText("Pagamento:");
+
+        jComboStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pendente", "Realizado" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -298,15 +406,19 @@ public class telaHospedagem extends javax.swing.JFrame {
                                     .addComponent(tfOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tfDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(4, 4, 4)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lDataEntrada)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lDataSaida)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lDataSaida)
+                                            .addComponent(jLabel1))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(ftDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(ftDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jComboStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lCategoria)
@@ -354,8 +466,16 @@ public class telaHospedagem extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lDataSaida)
                             .addComponent(ftDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
@@ -413,6 +533,22 @@ public class telaHospedagem extends javax.swing.JFrame {
         
     }//GEN-LAST:event_bPesquisarReservaActionPerformed
 
+    private void jBexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBexcluirActionPerformed
+        
+        excluirHospedagem();
+        
+    }//GEN-LAST:event_jBexcluirActionPerformed
+
+    private void jBatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBatualizarActionPerformed
+        
+        try {
+            atualizarHospedagem();
+        } catch (ParseException ex) {
+            Logger.getLogger(telaHospedagem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jBatualizarActionPerformed
+
     
     public void setarData(){
         //JOptionPane.showMessageDialog(null,this.getTitle());                   
@@ -461,10 +597,14 @@ public class telaHospedagem extends javax.swing.JFrame {
     private javax.swing.JButton bPesquisarReserva;
     private javax.swing.JFormattedTextField ftDataEntrada;
     private javax.swing.JFormattedTextField ftDataSaida;
+    private javax.swing.JButton jBatualizar;
+    private javax.swing.JButton jBexcluir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboCategoria;
     private javax.swing.JComboBox jComboQuarto;
+    private javax.swing.JComboBox jComboStatus;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lCategoria;
