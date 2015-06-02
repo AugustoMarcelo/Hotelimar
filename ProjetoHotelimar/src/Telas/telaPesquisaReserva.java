@@ -39,8 +39,7 @@ public class telaPesquisaReserva extends javax.swing.JFrame {
 
     public void pesquisarReserva() throws SQLException {
         int x = 0;
-        rs = hosDAO.pesquisarReserva(ftCpf.getText());
-        //JOptionPane.showMessageDialog(null,rs.next());
+        rs = hosDAO.pesquisarReserva(ftCpf.getText());        
         while (rs.next()){
             x = 1;
             idHospedagem = rs.getInt("id_hospedagem");

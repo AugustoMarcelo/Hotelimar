@@ -12,10 +12,9 @@ public class formPrincipal extends javax.swing.JFrame {
     public formPrincipal() {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/icones/logo hotelimar.png")).getImage());
-        this.setSize(1000, 500);
+        this.setSize(640,360);
         this.setLocationRelativeTo(null);
         //testando tarefa 00_7
-
     }   
 
     @SuppressWarnings("unchecked")
@@ -25,6 +24,7 @@ public class formPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMCategoria = new javax.swing.JMenu();
         jMClientes = new javax.swing.JMenuItem();
@@ -72,6 +72,10 @@ public class formPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulário Principal");
         setFocusable(false);
+        setResizable(false);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/descanso_tela.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
 
         jMCategoria.setText("Cadastro");
 
@@ -244,6 +248,7 @@ public class formPrincipal extends javax.swing.JFrame {
         });
         jMenuProduto.add(jMenuItemAcessorio);
 
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/calendar.png"))); // NOI18N
         jMenuItem9.setText("Reserva");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -302,11 +307,11 @@ public class formPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 595, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 245, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, Short.MAX_VALUE)
         );
 
         pack();
@@ -596,6 +601,7 @@ public class formPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JList jList1;
     private javax.swing.JMenuItem jMAcessorio;
     private javax.swing.JMenu jMCategoria;

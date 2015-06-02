@@ -1,6 +1,7 @@
 package Telas; // testandoo...
 
 import ClasseDAO.CategoriaDAO;
+import ClasseDAO.ClienteDAO;
 import ClasseDAO.HospedagemDAO;
 import ClasseDAO.QuartoDAO;
 import Classes.Categoria;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
+import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 
 public class telaHospedagem extends javax.swing.JFrame {
     
@@ -30,6 +32,7 @@ public class telaHospedagem extends javax.swing.JFrame {
     private ArrayList<String> nomes;
     private ArrayList<Quarto> listQuarto;
     private ResultSet rs;
+    private ClienteDAO cliDAO;
 
     public telaHospedagem() throws ClassNotFoundException {
         initComponents();
@@ -43,6 +46,7 @@ public class telaHospedagem extends javax.swing.JFrame {
         quartoDAO = new QuartoDAO();
         bPesquisarReserva.setVisible(false);
         montarComboCategoria();
+        cliDAO = new ClienteDAO();
         
     }
     
@@ -58,8 +62,10 @@ public class telaHospedagem extends javax.swing.JFrame {
         quarto = new Quarto();
         quartoDAO = new QuartoDAO();
         bPesquisarReserva.setVisible(false);
+        cliDAO = new ClienteDAO();
         montarComboCategoria();
         montarTela(hosp2);
+        
         
     }
     
@@ -73,7 +79,8 @@ public class telaHospedagem extends javax.swing.JFrame {
         ctg = new Categoria();
         nomes = cat.nomesCategoria();
         quarto = new Quarto();
-        quartoDAO = new QuartoDAO();        
+        quartoDAO = new QuartoDAO(); 
+        cliDAO = new ClienteDAO();
         setarData();
         montarComboCategoria();
     }
@@ -485,13 +492,25 @@ public class telaHospedagem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        try {
-            cadastrarHospedagem();
-        } catch (ParseException ex) {
-            Logger.getLogger(telaHospedagem.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(null,tfCpf.getText());
+        if(cliDAO.pesquisarCpfCliente(tfCpf.getText())){
+            try {
+                cadastrarHospedagem();
+            } catch (ParseException ex) {
+                Logger.getLogger(telaHospedagem.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            dispose();
+        }else{ 
+            JOptionPane.showMessageDialog(null,"Cliente não cadastrado! Cadastre-o agora.","",ERROR_MESSAGE);
+            try {
+                telaCliente telaCliente = new telaCliente();
+                telaCliente.setVisible(true);                
+                //cadastrarHospedagem();                
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(telaHospedagem.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        dispose();
+        //JOptionPane.showConfirmDialog(null,"A operação agora poderá ser realizada.","",PLAIN_MESSAGE);       
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

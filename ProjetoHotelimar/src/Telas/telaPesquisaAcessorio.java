@@ -29,6 +29,7 @@ public class telaPesquisaAcessorio extends javax.swing.JFrame {
         ace = null;
         ace = aceDAO.pesquisar(tfNome.getText());        
         if(ace != null){
+            
             DefaultTableModel dtmQuartos = (DefaultTableModel) tblAcessorio.getModel();
             dtmQuartos.addRow(new Object[] {ace.getNome(),ace.getDescricao()});  
         }else{

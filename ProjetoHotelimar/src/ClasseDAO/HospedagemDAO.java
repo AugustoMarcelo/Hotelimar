@@ -80,8 +80,7 @@ public class HospedagemDAO {
         return hosp;
     }
     
-    public ResultSet pesquisarReserva(String cpf) throws SQLException{
-        //JOptionPane.showMessageDialog(null,"rs = " + rs);
+    public ResultSet pesquisarReserva(String cpf) throws SQLException{        
         ArrayList<Hospedagem> listHosp = new ArrayList<>();
         String sql = "select c.nome, h.*, q.numero, cat.nome from " +
                 "hospedagem h, cliente c, quarto q, categoria cat where " +

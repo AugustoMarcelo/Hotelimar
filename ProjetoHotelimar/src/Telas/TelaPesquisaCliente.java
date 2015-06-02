@@ -26,7 +26,7 @@ public class TelaPesquisaCliente extends javax.swing.JFrame {
     }
     
     public void carregaItensDaTabela() throws ClassNotFoundException{
-    
+        
         int linha = tblCliente.getSelectedRow();
         cli.setCfp(tblCliente.getModel().getValueAt(linha,0).toString());
         cli = cliDAO.pesquisarCpf(cli);  
@@ -35,13 +35,18 @@ public class TelaPesquisaCliente extends javax.swing.JFrame {
         
     }
     
-    public void pesquisarCliente(){
-    
+    public void pesquisarCliente(){ 
         
-        cli.setCfp(tfCpf.getText());
-        rs = pesqCliDAO.pesquisarCpf(cli);        
-        tblCliente.setModel(DbUtils.resultSetToTableModel(rs));
-        tblCliente.setVisible(true);        
+        if(!tfCpf.getText().equals("")){
+            cli.setCfp(tfCpf.getText());
+            rs = pesqCliDAO.pesquisarCpf(cli);        
+            tblCliente.setModel(DbUtils.resultSetToTableModel(rs));
+            tblCliente.setVisible(true);     
+        }//else{
+//            for(int x = 0; x < tblCliente.getRowCount(); x++){
+//                tblCliente.removeRowSelectionInterval(0, 0);
+//            }
+//        }
     }
 
     

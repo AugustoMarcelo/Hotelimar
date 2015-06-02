@@ -127,4 +127,24 @@ public class ClienteDAO {
         return cli;
     }
     
+    public boolean pesquisarCpfCliente(String cpf){
+        boolean success = false;
+        rs = null;
+        String sql = "SELECT cpf FROM cliente WHERE cpf = ?";
+        try{
+            pmt = con.prepareStatement(sql);
+            pmt.setString(1,cpf);
+            rs = pmt.executeQuery();
+            while(rs.next()){
+                if(cpf.equals(rs.getString("cpf"))){
+                    success = true;                    
+                }
+            }
+        }catch(SQLException erro){
+            JOptionPane.showMessageDialog(null, erro);
+        }
+        JOptionPane.showMessageDialog(null, success);
+        return success;
+    }
+    
 }

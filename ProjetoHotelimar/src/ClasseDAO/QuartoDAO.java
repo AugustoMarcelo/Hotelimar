@@ -52,8 +52,7 @@ public class QuartoDAO {
         String sql = "select q.numero, c.nome from quarto q, categoria c where id_quarto = ? and "
                 + "c.id_categoria = q.id_categoria;";
         try{
-            pmt = con.prepareStatement(sql);
-            JOptionPane.showMessageDialog(null,pmt);
+            pmt = con.prepareStatement(sql);            
             pmt.setInt(1, id);
             rs = pmt.executeQuery();
         }catch(SQLException erro){        
