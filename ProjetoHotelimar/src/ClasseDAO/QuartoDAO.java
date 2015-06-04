@@ -192,10 +192,25 @@ public class QuartoDAO {
         
             JOptionPane.showMessageDialog(null, erro);
         }
-        //JOptionPane.showMessageDialog(null,"rs = " + rs.getString("numero"));
-        
-        return rs;
+        //JOptionPane.showMessageDialog(null,"rs = " + rs.getString("numero"));        
+        return rs;   
+    }
     
+    public String pesquisarNomeCategoria(int id){
+        String nome = "";
+        String sql = "SELECT nome FROM categoria WHERE id_categoria = ?";
+        try{
+            pmt = con.prepareStatement(sql);
+            pmt.setInt(1,id);
+            rs = pmt.executeQuery();
+            while(rs.next()){
+                nome = rs.getString("nome");
+            }
+        }catch(SQLException erro){
+        
+            JOptionPane.showMessageDialog(null,erro);
+        }
+        return nome;
     }
     
     

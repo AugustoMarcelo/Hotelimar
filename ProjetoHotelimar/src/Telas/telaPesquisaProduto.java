@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -40,30 +41,37 @@ public class telaPesquisaProduto extends javax.swing.JFrame {
     }
     
     public void pesquisarNome() throws SQLException{
-        
+        boolean achou = false;
         prod.setNome(tfNome.getText());
         rs = prodDAO.pesquisarProdutoRs(prod);
         limparDadosDaTabela();        
-        while(rs.next()){            
+        while(rs.next()){ 
+            achou = true;
             DefaultTableModel dtmQuartos = (DefaultTableModel) tblProdutos.getModel();
             dtmQuartos.addRow(new Object[] {rs.getString("codigo_barra"),rs.getString("nome"),
                 rs.getString("descricao"),rs.getDouble("preco")});
 
-        }   
+        } 
+        if(!achou){
+            JOptionPane.showMessageDialog(null,"Nenhum produto encontrado com esse nome!","",ERROR_MESSAGE);
+        }
         
     }
     
     public void pesquisarCodigoBarra() throws SQLException{
-    
+        boolean achou = false;
         prod.setCodigoBarra(tfCodBarra.getText());
         rs = prodDAO.pesquisarCodProdutoRs(prod);
         limparDadosDaTabela();        
-        while(rs.next()){            
+        while(rs.next()){
+            achou = true;
             DefaultTableModel dtmQuartos = (DefaultTableModel) tblProdutos.getModel();
             dtmQuartos.addRow(new Object[] {rs.getString("codigo_barra"),rs.getString("nome"),
                 rs.getString("descricao"),rs.getDouble("preco")});
-
-        }   
+        } 
+        if(!achou){
+            JOptionPane.showMessageDialog(null,"Nenhum produto encontrado com esse código de barras!","",ERROR_MESSAGE);
+        }
     }
     
     public void limparDadosDaTabela(){

@@ -69,17 +69,24 @@ public class telaPesquisaQuarto extends javax.swing.JFrame {
     }
     
     public void pesquisarNumeroQuarto() throws SQLException{
-        
+        boolean disponivel;
+        String disp = "";
         limparDadosDaTabela();
         quarto.setNumero(tfNumero.getText());
         rs = qDAO.pesquisarNumQuarto(quarto); 
         while(rs.next()){
+            disponivel = rs.getBoolean("disponibilidade");
+            if(disponivel){
+                disp = "Sim";
+            }else{
+                disp = "Não";
+            }
             cat.setId(rs.getInt("id_categoria"));
             cat = catDAO.pesquisar(cat);
             cat.setNome(cat.getNome());
             DefaultTableModel dtmQuartos = (DefaultTableModel) tbQuarto.getModel();
             dtmQuartos.addRow(new Object[] {rs.getString("numero"),rs.getString("capacidade"),
-                rs.getBoolean("disponibilidade"),cat.getNome()});
+                disp,cat.getNome()});
 
         }
         
@@ -96,7 +103,9 @@ public class telaPesquisaQuarto extends javax.swing.JFrame {
     
     public void pesquisarCategoriaQuarto() throws SQLException{
         
-        limparDadosDaTabela();         
+        limparDadosDaTabela();  
+        boolean disponivel;
+        String disp = "";
         cat.setNome(comboCategoria.getSelectedItem().toString());
         cat.setId(catDAO.pesquisarIdCategoria(cat));
         //JOptionPane.showMessageDialog(null,"id = " + cat.getId());
@@ -104,9 +113,15 @@ public class telaPesquisaQuarto extends javax.swing.JFrame {
         listQuarto = qDAO.pesquisar(quarto);
         if(listQuarto.size() > 0){
             for(int x = 0; x < listQuarto.size(); x++){
+                disponivel = listQuarto.get(x).isDisponibilidade();
+                if(disponivel){
+                    disp = "Sim";
+                }else{
+                    disp = "Não";
+                }
                 DefaultTableModel dtmQuartos = (DefaultTableModel) tbQuarto.getModel();
                 dtmQuartos.addRow(new Object[] {listQuarto.get(x).getNumero(),listQuarto.get(x).getCapacidade(),
-                    listQuarto.get(x).isDisponibilidade(),cat.getNome()});
+                    disp,cat.getNome()});
 
             }
         }else{

@@ -59,9 +59,9 @@ public class telaChecout extends javax.swing.JFrame {
         else{
             //JOptionPane.showMessageDialog(null,hosp.getId()+"\n" + hosp.getId_quarto());
             try{
-                lDataEntrada.setText("Data Entrada: " + hosp.getDataEntrada().toString());
+                lDataEntrada.setText("Data Entrada: " + converterNoFormatobrasil(hosp.getDataEntrada().toString()));
                 lCategoria.setText("Categoria: " + pegarNomeCategoria(hosp.getId_quarto()));
-                lDataSaida.setText("Data Saída: " + hosp.getDataSaida().toString());
+                lDataSaida.setText("Data Saída: " + converterNoFormatobrasil(hosp.getDataSaida().toString()));
                 lNumQuarto.setText("Nº Quarto: " + pegarNumQuarto(hosp.getId_quarto()));
                 lPrecoCategoria.setText("Preço Categoria: " + pegarPrecoCategoria(hosp.getId_quarto()).toString());
                 Double preco = pegarPrecoCategoria(hosp.getId_quarto()); 
@@ -132,6 +132,15 @@ public class telaChecout extends javax.swing.JFrame {
         cat.setNome(cat.getNome());
         return cat.getNome();
     
+    }
+    
+    public String converterNoFormatobrasil(String data){    
+        
+        String ano = data.substring(0,4);
+        String mes = data.substring(5, 7);
+        String dia = data.substring(8, 10);        
+        String dataBrasil = dia + "/" + mes + "/" + ano;
+        return dataBrasil;
     }
     
     public Date converterData(String data) throws ParseException{
@@ -416,7 +425,7 @@ public class telaChecout extends javax.swing.JFrame {
                                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jPanel4, jPanel5});
@@ -450,13 +459,14 @@ public class telaChecout extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );

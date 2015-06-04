@@ -65,7 +65,9 @@ public class telaCliente extends javax.swing.JFrame {
         tfNome.setText(cli.getNome());
         tfRg.setText(cli.getRg());
         tfTelefone.setText(cli.getTel());
-        formatoCpf.setText(cli.getCfp());        
+        formatoCpf.setText(cli.getCfp());     
+        comboEstadoCivil.setSelectedItem(cli.getEstadoCivil());
+        comboSexo.setSelectedItem(cli.getSexo());
     }
     
     public void excluirCliente(){

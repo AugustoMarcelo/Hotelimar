@@ -42,11 +42,19 @@ public class TelaPesquisaCliente extends javax.swing.JFrame {
             rs = pesqCliDAO.pesquisarCpf(cli);        
             tblCliente.setModel(DbUtils.resultSetToTableModel(rs));
             tblCliente.setVisible(true);     
-        }//else{
-//            for(int x = 0; x < tblCliente.getRowCount(); x++){
-//                tblCliente.removeRowSelectionInterval(0, 0);
-//            }
-//        }
+        }else{
+            tblCliente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Nome", "CPF", "RG"
+            }
+        ));
+        }
     }
 
     

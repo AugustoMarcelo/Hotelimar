@@ -66,6 +66,12 @@ public class telaQuarto extends javax.swing.JFrame {
         bCadastrar.setVisible(false);
         bAtualizar.setVisible(true);
         bExcluir.setVisible(true);
+        comboCategoria.setSelectedItem(obj.pesquisarNomeCategoria(q.getIdCategoria()));
+        if(q.isDisponibilidade()){
+            comboBoxDisponivel.setSelectedItem("Sim");
+        }else{
+           comboBoxDisponivel.setSelectedItem("Não"); 
+        }
         
     }
     

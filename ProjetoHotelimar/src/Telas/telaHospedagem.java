@@ -555,6 +555,7 @@ public class telaHospedagem extends javax.swing.JFrame {
     private void jBexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBexcluirActionPerformed
         
         excluirHospedagem();
+        dispose();
         
     }//GEN-LAST:event_jBexcluirActionPerformed
 
@@ -565,6 +566,7 @@ public class telaHospedagem extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(telaHospedagem.class.getName()).log(Level.SEVERE, null, ex);
         }
+        dispose();
         
     }//GEN-LAST:event_jBatualizarActionPerformed
 
